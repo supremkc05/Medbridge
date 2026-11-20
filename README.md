@@ -24,9 +24,13 @@ billing officer). The UI hides controls a role cannot use, and the API enforces 
 - Next.js (App Router), React and TypeScript
 - Redux Toolkit and RTK Query (cache tags and invalidation)
 - SCSS modules with shared design tokens
-- Next.js route handlers as a REST API over seeded, in-memory sample data
+- An in-browser REST-style router (`src/backend`) behind a custom RTK Query base query, so the app runs as a static site
 - Jest and React Testing Library
-- GitHub Actions: lint, type check, unit tests and build on every pull request
+- GitHub Actions: lint, type check, unit tests and build on every pull request; deploys to GitHub Pages from `main`
+
+## Live site
+
+https://supremkc05.github.io/Medbridge/
 
 ## Getting started
 
@@ -42,10 +46,10 @@ npm run typecheck
 
 ```
 src/
-  app/            routes (pages) and API route handlers
+  app/            routes (pages)
   components/     shared UI components and the app shell
   features/       patients, admin and billing modules (UI + RTK Query endpoints)
   lib/            formatting, permissions and validation shared by UI and API
-  server/         seeded data and query logic used by the API
+  backend/        seeded data, query logic and the in-browser API router
   store/          Redux store, session slice and base API
 ```

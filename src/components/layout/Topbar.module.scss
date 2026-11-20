@@ -139,3 +139,24 @@
   border-radius: 50%;
   background: #f04438;
 }
+
+@media (max-width: 1180px) {
+  .chip {
+    display: none;
+  }
+
+  .search {
+    width: 260px;
+  }
+}
+
+@media (max-width: 900px) {
+  .search kbd,
+  .role label {
+    display: none;
+  }
+
+  .topbar {
+    padding: 0 16px;
+  }
+}
