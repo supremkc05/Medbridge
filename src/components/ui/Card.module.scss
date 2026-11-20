@@ -1,0 +1,33 @@
+@use "../../styles/tokens" as *;
+
+.card {
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-card;
+  overflow: hidden;
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: $space-4;
+  padding: $space-4 $space-5;
+  border-bottom: 1px solid $color-border;
+}
+
+.title {
+  font-size: $font-size-lg;
+  font-weight: 650;
+}
+
+.description {
+  margin: 2px 0 0;
+  color: $color-muted;
+  font-size: $font-size-sm;
+}
+
+.body {
+  padding: $space-5;
+}
