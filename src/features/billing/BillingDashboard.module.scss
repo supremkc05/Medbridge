@@ -119,7 +119,7 @@
 }
 
 .barOutstanding {
-  background: #99e6d8;
+  background: #9fd9d7;
 }
 
 
@@ -172,29 +172,10 @@
   }
 }
 
-.chart {
-  display: block;
-  width: 100%;
-  height: auto;
-}
 
-.gridLine {
-  stroke: #eef0f3;
-  stroke-width: 1;
-}
 
-.axis {
-  fill: $color-faint;
-  font-size: 11px;
-}
 
-.svgPaid {
-  fill: $color-primary;
-}
 
-.svgOutstanding {
-  fill: #99e6d8;
-}
 
 .chartLegend {
   display: flex;

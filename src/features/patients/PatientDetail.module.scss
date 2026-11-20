@@ -7,7 +7,7 @@
   padding: 24px;
   margin-bottom: $space-4;
   background:
-    radial-gradient(120% 140% at 100% 0%, #ecfdf9 0%, rgba(236, 253, 249, 0) 55%),
+    radial-gradient(120% 140% at 100% 0%, #eef4ff 0%, rgba(236, 253, 249, 0) 55%),
     $color-surface;
   border: 1px solid $color-border;
   border-radius: $radius-lg;
@@ -185,6 +185,7 @@
 }
 
 .completed .dot { background: #17b26a; box-shadow: 0 0 0 1px #abefc6; }
+.checked_in .dot { background: #f79009; box-shadow: 0 0 0 1px #fedf89; }
 .scheduled .dot { background: #2e90fa; box-shadow: 0 0 0 1px #b2ddff; }
 .no_show .dot { background: #f04438; box-shadow: 0 0 0 1px #fecdca; }
 
