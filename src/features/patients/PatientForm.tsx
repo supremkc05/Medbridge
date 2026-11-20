@@ -2,6 +2,7 @@
 
 import { useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
+import { routes } from "@/lib/routes";
 import { Button, Card, Notice, PageHeader, SelectField, TextField } from "@/components/ui";
 import { hasErrors, validatePatient, type PatientErrors } from "@/lib/validation/patient";
 import type { ApiError, Patient, PatientInput } from "@/types";
@@ -67,7 +68,7 @@ export function PatientForm({ patient }: { patient?: Patient }) {
       const saved = editing
         ? await updatePatient({ id: patient!.id, body: values }).unwrap()
         : await createPatient(values).unwrap();
-      router.push(`/patients/${saved.id}`);
+      router.push(routes.patient(saved.id));
     } catch (err) {
       const data = (err as { data?: ApiError }).data;
       if (data?.fieldErrors) setErrors(data.fieldErrors as PatientErrors);
@@ -82,8 +83,8 @@ export function PatientForm({ patient }: { patient?: Patient }) {
     <>
       <PageHeader
         breadcrumbs={[
-          { label: "Patients", href: "/patients" },
-          ...(editing ? [{ label: `${patient!.firstName} ${patient!.lastName}`, href: `/patients/${patient!.id}` }] : []),
+          { label: "Patients", href: routes.patients },
+          ...(editing ? [{ label: `${patient!.firstName} ${patient!.lastName}`, href: routes.patient(patient!.id) }] : []),
           { label: editing ? "Edit" : "New patient" },
         ]}
         title={title}

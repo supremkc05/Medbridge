@@ -18,6 +18,7 @@ import {
 import { Avatar, Badge, Button, Card, EmptyState, ErrorState, LoadingState, PageHeader, type BadgeTone } from "@/components/ui";
 import { ageFrom, formatDate } from "@/lib/format";
 import { can } from "@/lib/permissions";
+import { routes } from "@/lib/routes";
 import { REFERENCE_DATE } from "@/lib/referenceDate";
 import { useAppSelector } from "@/store/hooks";
 import type { Appointment } from "@/types";
@@ -66,7 +67,7 @@ export function PatientDetail({ id }: { id: string }) {
 
   return (
     <>
-      <PageHeader breadcrumbs={[{ label: "Patients", href: "/patients" }, { label: name }]} title="Patient record" />
+      <PageHeader breadcrumbs={[{ label: "Patients", href: routes.patients }, { label: name }]} title="Patient record" />
 
       <section className={styles.profile}>
         <Avatar name={name} size="xl" />
@@ -77,17 +78,16 @@ export function PatientDetail({ id }: { id: string }) {
           </div>
           <p className={styles.meta}>
             <span className={styles.mono}>{p.mrn}</span>
-            <span>·</span>
-            <span>{GENDER[p.gender]}</span>
-            <span>·</span>
-            <span>{ageFrom(p.dateOfBirth, REFERENCE_DATE)} years</span>
-            <span>·</span>
-            <span>{p.insuranceProvider}</span>
+            {[GENDER[p.gender], `${ageFrom(p.dateOfBirth, REFERENCE_DATE)} years`, p.insuranceProvider]
+              .filter(Boolean)
+              .map((item) => (
+                <span key={item}>· {item}</span>
+              ))}
           </p>
         </div>
         <div className={styles.profileActions}>
           {can(role, "patients:edit") && (
-            <Button variant="secondary" onClick={() => router.push(`/patients/${p.id}/edit`)}>
+            <Button variant="secondary" onClick={() => router.push(routes.editPatient(p.id))}>
               <Pencil size={15} /> Edit details
             </Button>
           )}
