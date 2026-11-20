@@ -1,8 +1,21 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ChevronsUpDown, HeartPulse, Receipt, Settings, ShieldCheck, Users, type LucideIcon } from "lucide-react";
+import {
+  CalendarDays,
+  ChevronsUpDown,
+  LayoutDashboard,
+  LogOut,
+  Receipt,
+  Settings,
+  ShieldCheck,
+  Users,
+  type LucideIcon,
+} from "lucide-react";
+import logo from "@/assets/brand/medbridge-logo.png";
+import { routes } from "@/lib/routes";
 import { Avatar } from "@/components/ui/Avatar";
 import { useAppSelector } from "@/store/hooks";
 import { ROLE_LABELS } from "@/types";
@@ -12,6 +25,8 @@ const NAV: { group: string; items: { href: string; label: string; icon: LucideIc
   {
     group: "Clinic",
     items: [
+      { href: "/dashboard", label: "Overview", icon: LayoutDashboard },
+      { href: "/appointments", label: "Appointments", icon: CalendarDays },
       { href: "/patients", label: "Patients", icon: Users },
       { href: "/billing", label: "Billing", icon: Receipt },
     ],
@@ -31,12 +46,9 @@ export function Sidebar() {
 
   return (
     <aside className={styles.sidebar}>
-      <div className={styles.brand}>
-        <span className={styles.logo} aria-hidden="true">
-          <HeartPulse size={18} strokeWidth={2.4} />
-        </span>
-        <span className={styles.brandName}>MedBridge</span>
-      </div>
+      <Link href={routes.dashboard} className={styles.brand} aria-label="MedBridge home">
+        <Image src={logo} alt="MedBridge" className={styles.logo} priority />
+      </Link>
 
       <div className={styles.clinic}>
         <span className={styles.clinicMark} aria-hidden="true">
@@ -80,6 +92,9 @@ export function Sidebar() {
           <strong>{userName}</strong>
           <span>{ROLE_LABELS[role]}</span>
         </span>
+        <Link href={routes.login} className={styles.signOut} aria-label="Sign out" title="Sign out">
+          <LogOut size={17} />
+        </Link>
       </div>
     </aside>
   );

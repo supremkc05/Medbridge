@@ -22,9 +22,6 @@ export function Topbar() {
       </div>
 
       <div className={styles.right}>
-        <span className={styles.chip} title="Recreated interface built after the placement, using generated sample data">
-          Recreated demo · sample data
-        </span>
         <div className={styles.role}>
           <label htmlFor="role-switcher">Viewing as</label>
           <select id="role-switcher" value={role} onChange={(e) => dispatch(roleChanged(e.target.value as Role))}>
