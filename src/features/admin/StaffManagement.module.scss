@@ -1,0 +1,130 @@
+@use "../../styles/tokens" as *;
+
+.counts {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: $space-4;
+  margin-bottom: $space-5;
+}
+
+.count {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: $space-4;
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+
+  span {
+    color: $color-muted;
+    font-size: $font-size-sm;
+  }
+
+  strong {
+    font-size: 22px;
+  }
+}
+
+.section {
+  margin-bottom: $space-5;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: $space-5;
+}
+
+.person {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+
+  strong {
+    display: block;
+    font-weight: 600;
+  }
+}
+
+.avatar {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #eef2ff;
+  color: #3730a3;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.sub {
+  display: block;
+  font-size: 12px;
+  color: $color-muted;
+}
+
+.roleSelect {
+  height: 32px;
+  padding: 0 $space-2;
+  border: 1px solid $color-border;
+  border-radius: $radius-sm;
+  font: inherit;
+  background: $color-surface;
+
+  &:focus {
+    outline: none;
+    box-shadow: $focus-ring;
+  }
+}
+
+.invite {
+  display: grid;
+  grid-template-columns: 1.2fr 1.4fr 1fr auto;
+  gap: $space-4;
+  align-items: start;
+
+  button {
+    margin-top: 24px;
+  }
+}
+
+.matrix {
+  width: 100%;
+  border-collapse: collapse;
+
+  th,
+  td {
+    padding: $space-3 $space-4;
+    border-bottom: 1px solid #eef2f6;
+    text-align: center;
+  }
+
+  thead th {
+    background: #f8fafc;
+    font-size: 12px;
+    color: $color-muted;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  th[scope="row"],
+  thead th:first-child {
+    text-align: left;
+    font-weight: 500;
+  }
+
+  tbody tr:last-child > * {
+    border-bottom: none;
+  }
+}
+
+.yes {
+  color: $color-success;
+  font-weight: 700;
+}
+
+.no {
+  color: #c2c9d3;
+}
