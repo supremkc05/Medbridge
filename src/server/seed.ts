@@ -1,8 +1,8 @@
 import type { Appointment, ClinicSettings, Doctor, Invoice, Patient, StaffMember } from "@/types";
+import { REFERENCE_DATE } from "@/lib/referenceDate";
 import { createRandom } from "./random";
 
-/** Fixed "today" for the demo so that relative filters always show the same data. */
-export const DEMO_TODAY = new Date("2026-11-18T09:00:00Z");
+const TODAY = REFERENCE_DATE;
 
 const FIRST = [
   "Olivia", "Liam", "Emma", "Noah", "Ava", "Elijah", "Sophia", "James", "Isabella", "Lucas",
@@ -88,13 +88,13 @@ export function seed(): Database {
       insuranceProvider: rnd.pick(INSURERS),
       lastVisit: null,
       status: rnd.chance(0.88) ? "active" : "inactive",
-      createdAt: iso(addDays(DEMO_TODAY, -rnd.int(200, 900))),
+      createdAt: iso(addDays(TODAY, -rnd.int(200, 900))),
     };
 
     const visits = i % 13 === 5 ? 0 : rnd.int(1, 7);
     let last: string | null = null;
     for (let v = 0; v < visits; v++) {
-      const date = addDays(DEMO_TODAY, -rnd.int(3, 420));
+      const date = addDays(TODAY, -rnd.int(3, 420));
       const status: Appointment["status"] = rnd.chance(0.82) ? "completed" : rnd.pick(["cancelled", "no_show"] as const);
       const apptDoctor = rnd.chance(0.75) ? doctor : rnd.pick(doctors);
       appointments.push({
@@ -110,7 +110,7 @@ export function seed(): Database {
         if (date >= new Date("2026-05-01")) {
           const service = rnd.pick(SERVICES);
           const due = addDays(date, 30);
-          const overdue = due < DEMO_TODAY;
+          const overdue = due < TODAY;
           const paid = overdue ? rnd.chance(0.78) : rnd.chance(0.35);
           invoices.push({
             id: `inv${invoiceSeq}`,
@@ -131,7 +131,7 @@ export function seed(): Database {
         id: `a${appointments.length + 1}`,
         patientId: id,
         doctorId: doctor.id,
-        date: iso(addDays(DEMO_TODAY, rnd.int(2, 40))),
+        date: iso(addDays(TODAY, rnd.int(2, 40))),
         reason: rnd.pick(REASONS),
         status: "scheduled",
       });

@@ -15,6 +15,7 @@ import {
 } from "@/components/ui";
 import { ageFrom, formatDate } from "@/lib/format";
 import { can } from "@/lib/permissions";
+import { REFERENCE_DATE } from "@/lib/referenceDate";
 import { useAppSelector } from "@/store/hooks";
 import type { Appointment } from "@/types";
 import { useGetDoctorsQuery, useGetPatientQuery } from "./patientsApi";
@@ -73,7 +74,7 @@ export function PatientDetail({ id }: { id: string }) {
             <Badge tone={p.status === "active" ? "success" : "neutral"}>{p.status === "active" ? "Active" : "Inactive"}</Badge>
           </>
         }
-        description={`${p.mrn} · ${ageFrom(p.dateOfBirth, new Date("2026-11-18"))} years · Primary doctor: ${doctorName(p.primaryDoctorId)}`}
+        description={`${p.mrn} · ${ageFrom(p.dateOfBirth, REFERENCE_DATE)} years · Primary doctor: ${doctorName(p.primaryDoctorId)}`}
         actions={
           can(role, "patients:edit") && (
             <Button variant="secondary" onClick={() => router.push(`/patients/${p.id}/edit`)}>
