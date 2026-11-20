@@ -9,31 +9,41 @@
 }
 
 .crumbs {
-  margin-bottom: $space-2;
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
   font-size: $font-size-sm;
   color: $color-muted;
 
   a:hover {
-    color: $color-primary;
+    color: $color-primary-hover;
+  }
+
+  [aria-current] {
+    color: $color-text-2;
+    font-weight: 500;
   }
 }
 
 .sep {
-  margin: 0 $space-2;
+  margin: 0 6px;
+  color: $color-faint;
 }
 
 .title {
   display: flex;
   align-items: center;
   gap: $space-3;
-  font-size: 24px;
-  font-weight: 700;
-  letter-spacing: -0.01em;
+  font-size: 26px;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  color: $color-text;
 }
 
 .description {
-  margin: $space-1 0 0;
+  margin-top: 4px;
   color: $color-muted;
+  font-size: $font-size-md;
 }
 
 .actions {

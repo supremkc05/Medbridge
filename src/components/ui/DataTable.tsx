@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { ArrowDown, ArrowUp, ArrowUpDown } from "lucide-react";
 import styles from "./DataTable.module.scss";
 
 export type SortOrder = "asc" | "desc";
@@ -49,7 +50,7 @@ export function DataTable<T>({ caption, columns, rows, rowKey, sort, onSortChang
                     <button type="button" className={styles.sortButton} onClick={() => toggle(col.key)}>
                       {col.header}
                       <span className={`${styles.sortIcon} ${active ? styles.sortActive : ""}`} aria-hidden="true">
-                        {active ? (sort!.order === "asc" ? "▲" : "▼") : "↕"}
+                        {active ? sort!.order === "asc" ? <ArrowUp size={13} /> : <ArrowDown size={13} /> : <ArrowUpDown size={13} />}
                       </span>
                     </button>
                   ) : (

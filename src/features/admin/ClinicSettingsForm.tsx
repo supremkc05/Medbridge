@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
+import { Building2, CalendarClock, Lock, Receipt, RotateCcw, Save } from "lucide-react";
 import { Button, Card, EmptyState, ErrorState, LoadingState, Notice, PageHeader, SelectField, TextField } from "@/components/ui";
 import { can } from "@/lib/permissions";
 import { validateSettings, type SettingsErrors } from "@/lib/validation/settings";
@@ -45,9 +46,22 @@ function SettingsEditor({ initial }: { initial: ClinicSettings }) {
   };
 
   return (
+    <div className={styles.layout}>
+    <nav className={styles.sectionNav} aria-label="Settings sections">
+      <a href="#clinic-details" className={styles.navActive}>
+        <Building2 size={16} aria-hidden="true" /> Clinic details
+      </a>
+      <a href="#scheduling">
+        <CalendarClock size={16} aria-hidden="true" /> Scheduling
+      </a>
+      <a href="#billing-defaults">
+        <Receipt size={16} aria-hidden="true" /> Billing
+      </a>
+    </nav>
     <form onSubmit={submit} noValidate className={styles.form}>
       {saved && <Notice tone="success">Clinic settings saved.</Notice>}
 
+      <div id="clinic-details" />
       <Card title="Clinic details" description="Shown on appointment reminders and invoices.">
         <div className={styles.grid}>
           <div className={styles.full}>
@@ -61,6 +75,7 @@ function SettingsEditor({ initial }: { initial: ClinicSettings }) {
         </div>
       </Card>
 
+      <div id="scheduling" />
       <Card title="Scheduling" description="Used when booking appointments.">
         <div className={styles.grid}>
           <SelectField id="timezone" label="Time zone" options={TIMEZONES} value={values.timezone} onChange={(e) => set("timezone", e.target.value)} />
@@ -86,6 +101,7 @@ function SettingsEditor({ initial }: { initial: ClinicSettings }) {
         </div>
       </Card>
 
+      <div id="billing-defaults" />
       <Card title="Billing" description="Defaults for new invoices.">
         <div className={styles.grid3}>
           <SelectField id="currency" label="Currency" options={[{ value: "USD", label: "US dollar (USD)" }]} value={values.currency} onChange={(e) => set("currency", e.target.value)} />
@@ -96,14 +112,22 @@ function SettingsEditor({ initial }: { initial: ClinicSettings }) {
 
       <div className={styles.actions}>
         {dirty && <span className={styles.unsaved}>You have unsaved changes</span>}
-        <Button variant="secondary" disabled={!dirty || isLoading} onClick={() => { setValues(initial); setErrors({}); }}>
-          Discard
+        <Button
+          variant="secondary"
+          disabled={!dirty || isLoading}
+          onClick={() => {
+            setValues(initial);
+            setErrors({});
+          }}
+        >
+          <RotateCcw size={15} /> Discard
         </Button>
         <Button type="submit" disabled={!dirty || isLoading}>
-          {isLoading ? "Saving…" : "Save settings"}
+          <Save size={15} /> {isLoading ? "Saving…" : "Save settings"}
         </Button>
       </div>
     </form>
+    </div>
   );
 }
 
@@ -118,6 +142,7 @@ export function ClinicSettingsForm() {
       {!allowed ? (
         <Card>
           <EmptyState
+            icon={<Lock size={22} />}
             title="Access restricted"
             description={`Clinic settings can only be changed by a clinic manager. You are signed in as ${ROLE_LABELS[role]}.`}
           />

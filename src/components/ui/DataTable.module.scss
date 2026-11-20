@@ -10,20 +10,21 @@
   font-size: $font-size-md;
 
   th {
-    padding: $space-3 $space-4;
-    background: #f8fafc;
+    height: 44px;
+    padding: 0 20px;
+    background: $color-subtle;
     border-bottom: 1px solid $color-border;
     color: $color-muted;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.03em;
-    text-transform: uppercase;
+    font-size: $font-size-xs;
+    font-weight: 500;
     white-space: nowrap;
   }
 
   td {
-    padding: $space-3 $space-4;
-    border-bottom: 1px solid #eef2f6;
+    height: 64px;
+    padding: 0 20px;
+    border-bottom: 1px solid #eef0f3;
+    color: $color-text-2;
     vertical-align: middle;
   }
 
@@ -36,22 +37,24 @@
   cursor: pointer;
 
   &:hover td {
-    background: #f7fbfa;
+    background: #fafbfc;
   }
 }
 
 .sortButton {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
   padding: 0;
   border: none;
   background: none;
   font: inherit;
   color: inherit;
-  letter-spacing: inherit;
-  text-transform: inherit;
   cursor: pointer;
+
+  &:hover {
+    color: $color-text-2;
+  }
 
   &:focus-visible {
     outline: none;
@@ -61,8 +64,8 @@
 }
 
 .sortIcon {
-  font-size: 10px;
-  opacity: 0.45;
+  display: inline-flex;
+  opacity: 0.5;
 }
 
 .sortActive {

@@ -1,7 +1,9 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
+import { Lock, Mail, Plus, Receipt, ShieldCheck, Stethoscope, UserRound, X } from "lucide-react";
 import {
+  Avatar,
   Badge,
   Button,
   Card,
@@ -14,8 +16,9 @@ import {
   TextField,
   type BadgeTone,
   type Column,
+  StatCard,
 } from "@/components/ui";
-import { formatDate, initials } from "@/lib/format";
+import { formatDate } from "@/lib/format";
 import { ACTION_LABELS, ALL_ACTIONS, can } from "@/lib/permissions";
 import { useAppSelector } from "@/store/hooks";
 import { ROLE_LABELS, type ApiError, type Role, type StaffMember, type StaffStatus } from "@/types";
@@ -29,6 +32,13 @@ const STATUS: Record<StaffStatus, { label: string; tone: BadgeTone }> = {
 };
 
 const ROLES = Object.keys(ROLE_LABELS) as Role[];
+
+const ROLE_META = {
+  manager: { icon: ShieldCheck, tone: "violet", hint: "Full administrative access" },
+  doctor: { icon: Stethoscope, tone: "teal", hint: "Clinical records" },
+  front_desk: { icon: UserRound, tone: "blue", hint: "Registration and scheduling" },
+  billing: { icon: Receipt, tone: "amber", hint: "Invoices and payments" },
+} as const;
 const ROLE_OPTIONS = ROLES.map((r) => ({ value: r, label: ROLE_LABELS[r] }));
 
 function InviteForm({ onDone }: { onDone: (name: string) => void }) {
@@ -87,9 +97,7 @@ export function StaffManagement() {
       header: "Staff member",
       render: (s) => (
         <div className={styles.person}>
-          <span className={styles.avatar} aria-hidden="true">
-            {initials(s.name)}
-          </span>
+          <Avatar name={s.name} />
           <span>
             <strong>{s.name}</strong>
             <span className={styles.sub}>{s.email}</span>
@@ -121,7 +129,7 @@ export function StaffManagement() {
             </select>
           </>
         ) : (
-          ROLE_LABELS[s.role]
+          <span className={`${styles.rolePill} ${styles[s.role]}`}>{ROLE_LABELS[s.role]}</span>
         ),
     },
     { key: "status", header: "Status", render: (s) => <Badge tone={STATUS[s.status].tone}>{STATUS[s.status].label}</Badge> },
@@ -139,7 +147,7 @@ export function StaffManagement() {
                 </Button>
               ) : s.status === "invited" ? (
                 <Button size="sm" variant="ghost" onClick={() => setMessage({ tone: "success", text: `Invitation re-sent to ${s.email}.` })}>
-                  Resend invite
+                  <Mail size={14} /> Resend invite
                 </Button>
               ) : (
                 <Button size="sm" variant="danger" onClick={() => change(s, { status: "disabled" }, `${s.name}'s account was disabled.`)}>
@@ -156,23 +164,37 @@ export function StaffManagement() {
       <PageHeader
         title="Staff & roles"
         description="Manage who can sign in to the clinic's system and what each person is allowed to do."
-        actions={canManage && <Button onClick={() => setShowInvite((v) => !v)}>{showInvite ? "Close" : "+ Invite staff"}</Button>}
+        actions={
+          canManage && (
+            <Button variant={showInvite ? "secondary" : "primary"} onClick={() => setShowInvite((v) => !v)}>
+              {showInvite ? <X size={16} /> : <Plus size={16} />} {showInvite ? "Close" : "Invite staff"}
+            </Button>
+          )
+        }
       />
 
       {!canManage && (
         <Notice tone="info">
+          <Lock size={14} style={{ verticalAlign: "-2px", marginRight: 6 }} aria-hidden="true" />
           You are viewing this page as <strong>{ROLE_LABELS[role]}</strong>. Only clinic managers can invite staff or change roles.
         </Notice>
       )}
       {message && <Notice tone={message.tone}>{message.text}</Notice>}
 
       <div className={styles.counts}>
-        {counts.map((c) => (
-          <div key={c.role} className={styles.count}>
-            <span>{ROLE_LABELS[c.role]}</span>
-            <strong>{c.count}</strong>
-          </div>
-        ))}
+        {counts.map((c) => {
+          const meta = ROLE_META[c.role];
+          return (
+            <StatCard
+              key={c.role}
+              label={`${ROLE_LABELS[c.role]}s`.replace("Front desks", "Front desk staff")}
+              value={c.count}
+              hint={meta.hint}
+              icon={<meta.icon size={18} />}
+              tone={meta.tone}
+            />
+          );
+        })}
       </div>
 
       {showInvite && canManage && (

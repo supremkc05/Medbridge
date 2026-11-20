@@ -2,17 +2,20 @@
 
 import { useRouter } from "next/navigation";
 import {
-  Badge,
-  Button,
-  Card,
-  DataTable,
-  EmptyState,
-  ErrorState,
-  LoadingState,
-  PageHeader,
-  type BadgeTone,
-  type Column,
-} from "@/components/ui";
+  CalendarCheck,
+  CalendarClock,
+  Cake,
+  Clock,
+  Mail,
+  MapPin,
+  Pencil,
+  Phone,
+  ShieldPlus,
+  Stethoscope,
+  UserRound,
+  type LucideIcon,
+} from "lucide-react";
+import { Avatar, Badge, Button, Card, EmptyState, ErrorState, LoadingState, PageHeader, type BadgeTone } from "@/components/ui";
 import { ageFrom, formatDate } from "@/lib/format";
 import { can } from "@/lib/permissions";
 import { REFERENCE_DATE } from "@/lib/referenceDate";
@@ -30,11 +33,16 @@ const APPT_STATUS: Record<Appointment["status"], { label: string; tone: BadgeTon
 
 const GENDER: Record<string, string> = { female: "Female", male: "Male", other: "Other", undisclosed: "Prefer not to say" };
 
-function Field({ label, value }: { label: string; value?: string | null }) {
+function InfoRow({ icon: Icon, label, value }: { icon: LucideIcon; label: string; value?: string | null }) {
   return (
-    <div className={styles.field}>
-      <dt>{label}</dt>
-      <dd>{value ? value : <span className={styles.empty}>Not recorded</span>}</dd>
+    <div className={styles.infoRow}>
+      <span className={styles.infoIcon} aria-hidden="true">
+        <Icon size={16} />
+      </span>
+      <div>
+        <dt>{label}</dt>
+        <dd>{value ? value : <span className={styles.empty}>Not recorded</span>}</dd>
+      </div>
     </div>
   );
 }
@@ -44,82 +52,122 @@ export function PatientDetail({ id }: { id: string }) {
   const role = useAppSelector((s) => s.session.role);
   const { data, isLoading, isError, refetch } = useGetPatientQuery(id);
   const { data: doctors = [] } = useGetDoctorsQuery();
-  const doctorName = (doctorId: string) => doctors.find((d) => d.id === doctorId)?.name ?? "—";
+  const doctor = (doctorId: string) => doctors.find((d) => d.id === doctorId);
 
   if (isLoading) return <LoadingState label="Loading patient" />;
   if (isError || !data) return <ErrorState message="This patient record could not be loaded." onRetry={refetch} />;
 
   const { patient: p, appointments } = data;
+  const name = `${p.firstName} ${p.lastName}`;
   const completed = appointments.filter((a) => a.status === "completed").length;
-  const upcoming = appointments.find((a) => a.status === "scheduled");
-
-  const columns: Column<Appointment>[] = [
-    { key: "date", header: "Date", render: (a) => formatDate(a.date) },
-    { key: "reason", header: "Reason", render: (a) => a.reason },
-    { key: "doctor", header: "Doctor", render: (a) => doctorName(a.doctorId) },
-    {
-      key: "status",
-      header: "Status",
-      render: (a) => <Badge tone={APPT_STATUS[a.status].tone}>{APPT_STATUS[a.status].label}</Badge>,
-    },
-  ];
+  const missed = appointments.filter((a) => a.status === "no_show").length;
+  const upcoming = [...appointments].reverse().find((a) => a.status === "scheduled");
+  const primary = doctor(p.primaryDoctorId);
 
   return (
     <>
-      <PageHeader
-        breadcrumbs={[{ label: "Patients", href: "/patients" }, { label: `${p.firstName} ${p.lastName}` }]}
-        title={
-          <>
-            {p.firstName} {p.lastName}
+      <PageHeader breadcrumbs={[{ label: "Patients", href: "/patients" }, { label: name }]} title="Patient record" />
+
+      <section className={styles.profile}>
+        <Avatar name={name} size="xl" />
+        <div className={styles.identity}>
+          <div className={styles.nameRow}>
+            <h2>{name}</h2>
             <Badge tone={p.status === "active" ? "success" : "neutral"}>{p.status === "active" ? "Active" : "Inactive"}</Badge>
-          </>
-        }
-        description={`${p.mrn} · ${ageFrom(p.dateOfBirth, REFERENCE_DATE)} years · Primary doctor: ${doctorName(p.primaryDoctorId)}`}
-        actions={
-          can(role, "patients:edit") && (
+          </div>
+          <p className={styles.meta}>
+            <span className={styles.mono}>{p.mrn}</span>
+            <span>·</span>
+            <span>{GENDER[p.gender]}</span>
+            <span>·</span>
+            <span>{ageFrom(p.dateOfBirth, REFERENCE_DATE)} years</span>
+            <span>·</span>
+            <span>{p.insuranceProvider}</span>
+          </p>
+        </div>
+        <div className={styles.profileActions}>
+          {can(role, "patients:edit") && (
             <Button variant="secondary" onClick={() => router.push(`/patients/${p.id}/edit`)}>
-              Edit details
+              <Pencil size={15} /> Edit details
             </Button>
-          )
-        }
-      />
+          )}
+        </div>
+      </section>
 
       <div className={styles.stats}>
         <div className={styles.stat}>
-          <span>Last visit</span>
-          <strong>{formatDate(p.lastVisit, "No visits yet")}</strong>
+          <CalendarCheck size={18} className={styles.statIcon} aria-hidden="true" />
+          <div>
+            <span>Last visit</span>
+            <strong>{formatDate(p.lastVisit, "No visits yet")}</strong>
+          </div>
         </div>
         <div className={styles.stat}>
-          <span>Completed visits</span>
-          <strong>{completed}</strong>
+          <CalendarClock size={18} className={styles.statIcon} aria-hidden="true" />
+          <div>
+            <span>Next appointment</span>
+            <strong>{upcoming ? formatDate(upcoming.date) : "None booked"}</strong>
+          </div>
         </div>
         <div className={styles.stat}>
-          <span>Next appointment</span>
-          <strong>{upcoming ? formatDate(upcoming.date) : "None booked"}</strong>
+          <Stethoscope size={18} className={styles.statIcon} aria-hidden="true" />
+          <div>
+            <span>Completed visits</span>
+            <strong>{completed}</strong>
+          </div>
         </div>
         <div className={styles.stat}>
-          <span>Insurance</span>
-          <strong>{p.insuranceProvider}</strong>
+          <Clock size={18} className={styles.statIcon} aria-hidden="true" />
+          <div>
+            <span>Missed appointments</span>
+            <strong>{missed}</strong>
+          </div>
         </div>
       </div>
 
       <div className={styles.grid}>
-        <Card title="Personal information">
-          <dl className={styles.list}>
-            <Field label="Date of birth" value={formatDate(p.dateOfBirth)} />
-            <Field label="Gender" value={GENDER[p.gender]} />
-            <Field label="Phone" value={p.phone} />
-            <Field label="Email" value={p.email} />
-            <Field label="Address" value={p.address} />
-            <Field label="Registered" value={formatDate(p.createdAt)} />
-          </dl>
-        </Card>
+        <div className={styles.side}>
+          <Card title="Contact details">
+            <dl className={styles.info}>
+              <InfoRow icon={Phone} label="Phone" value={p.phone} />
+              <InfoRow icon={Mail} label="Email" value={p.email} />
+              <InfoRow icon={MapPin} label="Address" value={p.address} />
+            </dl>
+          </Card>
+          <Card title="Personal & care">
+            <dl className={styles.info}>
+              <InfoRow icon={Cake} label="Date of birth" value={formatDate(p.dateOfBirth)} />
+              <InfoRow icon={UserRound} label="Primary doctor" value={primary ? `${primary.name} · ${primary.specialty}` : null} />
+              <InfoRow icon={ShieldPlus} label="Insurance" value={p.insuranceProvider} />
+              <InfoRow icon={CalendarCheck} label="Registered" value={formatDate(p.createdAt)} />
+            </dl>
+          </Card>
+        </div>
 
-        <Card title="Appointment history" description={`${appointments.length} appointments on record`} flush>
+        <Card title="Appointment history" description={`${appointments.length} appointments on record`}>
           {appointments.length === 0 ? (
             <EmptyState title="No appointments yet" description="Appointments booked for this patient will appear here." />
           ) : (
-            <DataTable caption="Appointment history" columns={columns} rows={appointments} rowKey={(a) => a.id} />
+            <ol className={styles.timeline}>
+              {appointments.map((a) => {
+                const d = doctor(a.doctorId);
+                return (
+                  <li key={a.id} className={`${styles.event} ${styles[a.status]}`}>
+                    <span className={styles.dot} aria-hidden="true" />
+                    <div className={styles.eventBody}>
+                      <div className={styles.eventTop}>
+                        <strong>{a.reason}</strong>
+                        <Badge tone={APPT_STATUS[a.status].tone}>{APPT_STATUS[a.status].label}</Badge>
+                      </div>
+                      <p className={styles.eventMeta}>
+                        {formatDate(a.date)} · {d?.name ?? "—"}
+                        {d && <span className={styles.specialty}> · {d.specialty}</span>}
+                      </p>
+                    </div>
+                  </li>
+                );
+              })}
+            </ol>
           )}
         </Card>
       </div>

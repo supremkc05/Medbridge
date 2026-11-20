@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { ChevronRight } from "lucide-react";
 import styles from "./PageHeader.module.scss";
 
 interface Crumb {
@@ -21,9 +22,9 @@ export function PageHeader({ title, description, actions, breadcrumbs }: PageHea
         {breadcrumbs && (
           <nav aria-label="Breadcrumb" className={styles.crumbs}>
             {breadcrumbs.map((c, i) => (
-              <span key={c.label}>
+              <span key={c.label} style={{ display: "inline-flex", alignItems: "center" }}>
                 {c.href ? <Link href={c.href}>{c.label}</Link> : <span aria-current="page">{c.label}</span>}
-                {i < breadcrumbs.length - 1 && <span className={styles.sep}>/</span>}
+                {i < breadcrumbs.length - 1 && <ChevronRight size={14} className={styles.sep} aria-hidden="true" />}
               </span>
             ))}
           </nav>

@@ -4,13 +4,13 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: $space-2;
+  gap: 6px;
   border: 1px solid transparent;
   border-radius: $radius-sm;
   font: inherit;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.15s ease, border-color 0.15s ease;
+  transition: background 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
   white-space: nowrap;
 
   &:focus-visible {
@@ -19,26 +19,27 @@
   }
 
   &:disabled {
-    opacity: 0.55;
+    opacity: 0.5;
     cursor: not-allowed;
   }
 }
 
 .md {
-  height: 38px;
-  padding: 0 $space-4;
+  height: 40px;
+  padding: 0 16px;
   font-size: $font-size-md;
 }
 
 .sm {
-  height: 30px;
-  padding: 0 $space-3;
+  height: 32px;
+  padding: 0 12px;
   font-size: $font-size-sm;
 }
 
 .primary {
   background: $color-primary;
   color: #fff;
+  box-shadow: $shadow-xs, inset 0 1px 0 rgba(255, 255, 255, 0.12);
 
   &:hover:not(:disabled) {
     background: $color-primary-hover;
@@ -46,18 +47,19 @@
 }
 
 .secondary {
-  background: $color-surface;
-  border-color: $color-border;
-  color: $color-text;
+  background-color: $color-surface;
+  border-color: $color-border-strong;
+  color: $color-text-2;
+  box-shadow: $shadow-xs;
 
   &:hover:not(:disabled) {
-    background: $color-bg;
+    background: $color-subtle;
   }
 }
 
 .ghost {
   background: transparent;
-  color: $color-primary;
+  color: $color-primary-hover;
 
   &:hover:not(:disabled) {
     background: $color-primary-soft;
@@ -65,9 +67,10 @@
 }
 
 .danger {
-  background: $color-surface;
-  border-color: #f3c5c5;
+  background-color: $color-surface;
+  border-color: $color-danger-border;
   color: $color-danger;
+  box-shadow: $shadow-xs;
 
   &:hover:not(:disabled) {
     background: $color-danger-soft;

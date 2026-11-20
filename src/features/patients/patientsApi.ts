@@ -1,4 +1,5 @@
 import { api } from "@/store/api";
+import type { PatientStats } from "@/server/patients";
 import type { Appointment, Doctor, Paginated, Patient, PatientInput } from "@/types";
 
 export interface PatientListParams {
@@ -28,14 +29,22 @@ export const patientsApi = api.injectEndpoints({
     createPatient: build.mutation<Patient, PatientInput>({
       query: (body) => ({ url: "/patients", method: "POST", body }),
       // A new patient changes the list, so every cached list query is refetched.
-      invalidatesTags: [{ type: "Patient", id: "LIST" }],
+      invalidatesTags: [
+        { type: "Patient", id: "LIST" },
+        { type: "Patient", id: "STATS" },
+      ],
     }),
     updatePatient: build.mutation<Patient, { id: string; body: PatientInput }>({
       query: ({ id, body }) => ({ url: `/patients/${id}`, method: "PUT", body }),
       invalidatesTags: (_result, _error, { id }) => [
         { type: "Patient", id },
         { type: "Patient", id: "LIST" },
+        { type: "Patient", id: "STATS" },
       ],
+    }),
+    getPatientStats: build.query<PatientStats, void>({
+      query: () => "/patients/stats",
+      providesTags: [{ type: "Patient", id: "STATS" }],
     }),
     getDoctors: build.query<Doctor[], void>({
       query: () => "/doctors",
@@ -47,6 +56,7 @@ export const patientsApi = api.injectEndpoints({
 export const {
   useGetPatientsQuery,
   useGetPatientQuery,
+  useGetPatientStatsQuery,
   useCreatePatientMutation,
   useUpdatePatientMutation,
   useGetDoctorsQuery,

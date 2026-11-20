@@ -59,3 +59,23 @@ export function queryPatients(
   const page = Math.min(q.page ?? 1, pageCount);
   return { items: rows.slice((page - 1) * pageSize, page * pageSize), total: rows.length, page, pageSize };
 }
+
+export interface PatientStats {
+  total: number;
+  active: number;
+  newThisMonth: number;
+  seenLast30Days: number;
+  neverSeen: number;
+}
+
+export function patientStats(patients: Patient[], today: Date = REFERENCE_DATE): PatientStats {
+  const month = today.toISOString().slice(0, 7);
+  const cutoff = today.getTime() - 30 * 86_400_000;
+  return {
+    total: patients.length,
+    active: patients.filter((p) => p.status === "active").length,
+    newThisMonth: patients.filter((p) => p.createdAt.startsWith(month)).length,
+    seenLast30Days: patients.filter((p) => p.lastVisit && new Date(p.lastVisit).getTime() >= cutoff).length,
+    neverSeen: patients.filter((p) => !p.lastVisit).length,
+  };
+}
