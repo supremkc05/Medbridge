@@ -1,0 +1,87 @@
+@use "../../styles/tokens" as *;
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: $space-5;
+  max-width: 920px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $space-4 $space-5;
+}
+
+.grid3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: $space-4 $space-5;
+}
+
+.full {
+  grid-column: 1 / -1;
+}
+
+.days {
+  margin: 0;
+  padding: 0;
+  border: none;
+
+  legend {
+    margin-bottom: 6px;
+    font-size: $font-size-sm;
+    font-weight: 600;
+  }
+}
+
+.dayList {
+  display: flex;
+  gap: $space-2;
+}
+
+.day {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border: 1px solid $color-border;
+  border-radius: 999px;
+  cursor: pointer;
+  user-select: none;
+
+  input {
+    accent-color: $color-primary;
+  }
+
+  &:focus-within {
+    box-shadow: $focus-ring;
+  }
+}
+
+.dayOn {
+  border-color: #99d5cc;
+  background: $color-primary-soft;
+  color: $color-primary-hover;
+  font-weight: 600;
+}
+
+.error {
+  margin: 6px 0 0;
+  font-size: 12px;
+  color: $color-danger;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: $space-3;
+}
+
+.unsaved {
+  margin-right: auto;
+  color: $color-warning;
+  font-size: $font-size-sm;
+  font-weight: 500;
+}
