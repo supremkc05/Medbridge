@@ -1,9 +1,12 @@
 import { can, type Action } from "@/lib/permissions";
+import { REFERENCE_DATE, isoDate } from "@/lib/referenceDate";
 import { hasErrors, validatePatient } from "@/lib/validation/patient";
 import { validateSettings } from "@/lib/validation/settings";
 import type { ClinicSettings, Patient, PatientInput, Role, StaffMember, StaffStatus } from "@/types";
 import { db } from "./db";
 import { queryInvoices } from "./invoices";
+import { queryAppointments, withNames } from "./appointments";
+import { dashboard } from "./dashboard";
 import { patientStats, queryPatients, type LastVisitFilter, type PatientSortKey } from "./patients";
 
 /**
@@ -44,6 +47,39 @@ type Handler = (req: Request, match: string[]) => Response;
 
 const routes: [string, RegExp, Handler][] = [
   ["GET", /^\/doctors$/, () => ok(db().doctors)],
+
+  ["GET", /^\/dashboard$/, () => ok(dashboard(db()))],
+
+  [
+    "GET",
+    /^\/appointments$/,
+    ({ params: q }) => {
+      const store = db();
+      const date = /^\d{4}-\d{2}-\d{2}$/.test(q.date ?? "") ? q.date : isoDate(REFERENCE_DATE);
+      return ok(
+        queryAppointments(withNames(store.appointments, store.patients, store.doctors), {
+          date,
+          doctorId: q.doctorId ?? "",
+          status: q.status ?? "",
+        }),
+      );
+    },
+  ],
+
+  [
+    "PATCH",
+    /^\/appointments\/([\w-]+)$/,
+    ({ body, role }, [id]) => {
+      if (role === "billing") return fail(403, "You do not have permission to do this.");
+      const appt = db().appointments.find((a) => a.id === id);
+      if (!appt) return fail(404, "Appointment not found.");
+      const { status } = body as { status?: string };
+      const allowed: Record<string, string[]> = { scheduled: ["checked_in", "cancelled", "no_show"], checked_in: ["completed"] };
+      if (!status || !allowed[appt.status]?.includes(status)) return fail(409, `Cannot change an appointment from ${appt.status} to ${status}.`);
+      appt.status = status as typeof appt.status;
+      return ok(appt);
+    },
+  ],
 
   ["GET", /^\/patients\/stats$/, () => ok(patientStats(db().patients))],
 

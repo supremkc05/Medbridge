@@ -1,0 +1,25 @@
+@use "../../styles/tokens" as *;
+
+.chart {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.gridLine {
+  stroke: #eef0f3;
+  stroke-width: 1;
+}
+
+.axis {
+  fill: $color-faint;
+  font-size: 11px;
+}
+
+.svgPaid {
+  fill: $color-primary;
+}
+
+.svgOutstanding {
+  fill: #9fd9d7;
+}

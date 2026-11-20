@@ -22,28 +22,14 @@
 }
 
 .brand {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 2px 8px 4px;
+  display: block;
+  padding: 4px 8px 6px;
 }
 
 .logo {
-  width: 32px;
-  height: 32px;
-  display: grid;
-  place-items: center;
-  border-radius: 9px;
-  background: linear-gradient(140deg, #2dd4bf 0%, #0d9488 55%, #0f766e 100%);
-  color: #fff;
-  box-shadow: 0 2px 6px rgba(13, 148, 136, 0.35);
-}
-
-.brandName {
-  font-size: 18px;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  color: $color-text;
+  display: block;
+  width: 172px;
+  height: auto;
 }
 
 .clinic {
@@ -62,7 +48,7 @@
   display: grid;
   place-items: center;
   border-radius: 8px;
-  background: #101828;
+  background: $color-navy;
   color: #fff;
   font-size: 12px;
   font-weight: 700;
@@ -137,7 +123,7 @@
 
 .active {
   background: $color-primary-soft;
-  color: #0f766e;
+  color: $color-primary-hover;
   font-weight: 600;
 
   svg {
@@ -146,7 +132,7 @@
 
   &:hover {
     background: $color-primary-soft;
-    color: #0f766e;
+    color: $color-primary-hover;
   }
 }
 
@@ -157,6 +143,21 @@
   margin-top: auto;
   padding: 12px 8px 0;
   border-top: 1px solid $color-border;
+}
+
+.signOut {
+  margin-left: auto;
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border-radius: $radius-sm;
+  color: $color-faint;
+
+  &:hover {
+    background: $color-subtle;
+    color: $color-danger;
+  }
 }
 
 .userText {

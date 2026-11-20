@@ -8,7 +8,7 @@ import { routes } from "@/lib/routes";
 export default function Home() {
   const router = useRouter();
   useEffect(() => {
-    router.replace(routes.patients);
+    router.replace(routes.login);
   }, [router]);
-  return <LoadingState label="Opening patients" />;
+  return <LoadingState label="Opening MedBridge" />;
 }
