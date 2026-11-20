@@ -7,24 +7,6 @@
   margin-bottom: $space-5;
 }
 
-.count {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: $space-4;
-  background: $color-surface;
-  border: 1px solid $color-border;
-  border-radius: $radius-md;
-
-  span {
-    color: $color-muted;
-    font-size: $font-size-sm;
-  }
-
-  strong {
-    font-size: 22px;
-  }
-}
 
 .section {
   margin-bottom: $space-5;
@@ -47,17 +29,6 @@
   }
 }
 
-.avatar {
-  width: 34px;
-  height: 34px;
-  display: grid;
-  place-items: center;
-  border-radius: 50%;
-  background: #eef2ff;
-  color: #3730a3;
-  font-size: 12px;
-  font-weight: 700;
-}
 
 .sub {
   display: block;
@@ -66,12 +37,14 @@
 }
 
 .roleSelect {
-  height: 32px;
-  padding: 0 $space-2;
+  height: 34px;
+  min-width: 160px;
+  padding: 0 10px;
+  box-shadow: $shadow-xs;
   border: 1px solid $color-border;
   border-radius: $radius-sm;
   font: inherit;
-  background: $color-surface;
+  background-color: $color-surface;
 
   &:focus {
     outline: none;
@@ -128,3 +101,16 @@
 .no {
   color: #c2c9d3;
 }
+
+.rolePill {
+  display: inline-flex;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: $font-size-xs;
+  font-weight: 500;
+}
+
+.manager { background: #f4f3ff; color: #5925dc; }
+.doctor { background: #ecfdf9; color: #0f766e; }
+.front_desk { background: #eff8ff; color: #175cd3; }
+.billing { background: #fffaeb; color: #b54708; }
