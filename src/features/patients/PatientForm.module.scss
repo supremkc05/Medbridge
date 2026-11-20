@@ -1,0 +1,24 @@
+@use "../../styles/tokens" as *;
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: $space-5;
+  max-width: 880px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $space-4 $space-5;
+}
+
+.full {
+  grid-column: 1 / -1;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: $space-3;
+}
