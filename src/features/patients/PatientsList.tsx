@@ -19,6 +19,7 @@ import {
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 import { ageFrom, formatDate } from "@/lib/format";
 import { can } from "@/lib/permissions";
+import { REFERENCE_DATE } from "@/lib/referenceDate";
 import { useAppSelector } from "@/store/hooks";
 import type { Patient } from "@/types";
 import { useGetDoctorsQuery, useGetPatientsQuery, type PatientListParams } from "./patientsApi";
@@ -101,7 +102,7 @@ export function PatientsList() {
       render: (p) => (
         <span>
           {formatDate(p.dateOfBirth)}
-          <span className={styles.sub}>{ageFrom(p.dateOfBirth, new Date("2026-11-18"))} years</span>
+          <span className={styles.sub}>{ageFrom(p.dateOfBirth, REFERENCE_DATE)} years</span>
         </span>
       ),
     },

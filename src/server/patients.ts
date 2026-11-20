@@ -1,5 +1,5 @@
 import type { Paginated, Patient } from "@/types";
-import { DEMO_TODAY } from "./seed";
+import { REFERENCE_DATE } from "@/lib/referenceDate";
 
 export type PatientSortKey = "name" | "dateOfBirth" | "lastVisit" | "doctor";
 export type LastVisitFilter = "" | "30" | "90" | "365" | "never";
@@ -19,7 +19,7 @@ export function queryPatients(
   patients: Patient[],
   doctorNames: Record<string, string>,
   q: PatientQuery,
-  today: Date = DEMO_TODAY,
+  today: Date = REFERENCE_DATE,
 ): Paginated<Patient> {
   const search = q.search?.trim().toLowerCase() ?? "";
   let rows = patients.filter((p) => {
