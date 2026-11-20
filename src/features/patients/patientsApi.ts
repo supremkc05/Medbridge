@@ -1,5 +1,5 @@
 import { api } from "@/store/api";
-import type { Doctor, Paginated, Patient } from "@/types";
+import type { Appointment, Doctor, Paginated, Patient, PatientInput } from "@/types";
 
 export interface PatientListParams {
   search: string;
@@ -21,6 +21,22 @@ export const patientsApi = api.injectEndpoints({
         ...(result?.items.map((p) => ({ type: "Patient" as const, id: p.id })) ?? []),
       ],
     }),
+    getPatient: build.query<{ patient: Patient; appointments: Appointment[] }, string>({
+      query: (id) => `/patients/${id}`,
+      providesTags: (_result, _error, id) => [{ type: "Patient", id }],
+    }),
+    createPatient: build.mutation<Patient, PatientInput>({
+      query: (body) => ({ url: "/patients", method: "POST", body }),
+      // A new patient changes the list, so every cached list query is refetched.
+      invalidatesTags: [{ type: "Patient", id: "LIST" }],
+    }),
+    updatePatient: build.mutation<Patient, { id: string; body: PatientInput }>({
+      query: ({ id, body }) => ({ url: `/patients/${id}`, method: "PUT", body }),
+      invalidatesTags: (_result, _error, { id }) => [
+        { type: "Patient", id },
+        { type: "Patient", id: "LIST" },
+      ],
+    }),
     getDoctors: build.query<Doctor[], void>({
       query: () => "/doctors",
       providesTags: [{ type: "Doctor", id: "LIST" }],
@@ -28,4 +44,10 @@ export const patientsApi = api.injectEndpoints({
   }),
 });
 
-export const { useGetPatientsQuery, useGetDoctorsQuery } = patientsApi;
+export const {
+  useGetPatientsQuery,
+  useGetPatientQuery,
+  useCreatePatientMutation,
+  useUpdatePatientMutation,
+  useGetDoctorsQuery,
+} = patientsApi;

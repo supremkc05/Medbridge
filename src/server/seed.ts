@@ -9,6 +9,10 @@ const FIRST = [
   "Mia", "Mason", "Amelia", "Ethan", "Harper", "Logan", "Evelyn", "Aiden", "Abigail", "Caleb",
   "Ella", "Henry", "Scarlett", "Owen", "Grace", "Wyatt", "Chloe", "Leo", "Nora", "Julian",
 ];
+const FEMALE = new Set([
+  "Olivia", "Emma", "Ava", "Sophia", "Isabella", "Mia", "Amelia", "Harper", "Evelyn", "Abigail",
+  "Ella", "Scarlett", "Grace", "Chloe", "Nora",
+]);
 const LAST = [
   "Bennett", "Carter", "Diaz", "Ellis", "Foster", "Garcia", "Hayes", "Iverson", "Jensen", "Kim",
   "Lopez", "Morales", "Nguyen", "Ortiz", "Patel", "Quinn", "Reyes", "Sullivan", "Turner", "Vaughn",
@@ -76,7 +80,7 @@ export function seed(): Database {
       firstName,
       lastName,
       dateOfBirth: `${birthYear}-${String(rnd.int(1, 12)).padStart(2, "0")}-${String(rnd.int(1, 28)).padStart(2, "0")}`,
-      gender: rnd.pick(["female", "male", "female", "male", "other", "undisclosed"] as const),
+      gender: rnd.chance(0.08) ? "undisclosed" : FEMALE.has(firstName) ? "female" : "male",
       phone: `(555) ${rnd.int(200, 989)}-${String(rnd.int(0, 9999)).padStart(4, "0")}`,
       email: rnd.chance(0.85) ? `${firstName}.${lastName}${i}@example.com`.toLowerCase() : "",
       address: rnd.chance(0.9) ? `${rnd.int(10, 9800)} ${rnd.pick(STREETS)}, ${rnd.pick(CITIES)}` : "",
