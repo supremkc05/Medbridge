@@ -3,7 +3,9 @@
 import { useEffect, useMemo, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
+import { CalendarCheck, Download, Plus, Search, UserPlus, Users, X } from "lucide-react";
 import {
+  Avatar,
   Badge,
   Button,
   Card,
@@ -15,14 +17,16 @@ import {
   Pagination,
   type Column,
   type SortOrder,
+  StatCard,
 } from "@/components/ui";
+import { downloadCsv } from "@/lib/csv";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 import { ageFrom, formatDate } from "@/lib/format";
 import { can } from "@/lib/permissions";
 import { REFERENCE_DATE } from "@/lib/referenceDate";
 import { useAppSelector } from "@/store/hooks";
 import type { Patient } from "@/types";
-import { useGetDoctorsQuery, useGetPatientsQuery, type PatientListParams } from "./patientsApi";
+import { useGetDoctorsQuery, useGetPatientStatsQuery, useGetPatientsQuery, type PatientListParams } from "./patientsApi";
 import styles from "./PatientsList.module.scss";
 
 const LAST_VISIT_OPTIONS = [
@@ -71,6 +75,7 @@ export function PatientsList() {
 
   const { data, isLoading, isFetching, isError, refetch } = useGetPatientsQuery(params);
   const { data: doctors = [] } = useGetDoctorsQuery();
+  const { data: stats } = useGetPatientStatsQuery();
   const doctorName = useMemo(() => Object.fromEntries(doctors.map((d) => [d.id, d.name])), [doctors]);
 
   const hasFilters = Boolean(params.search || params.doctorId || params.lastVisit || params.status);
@@ -82,15 +87,12 @@ export function PatientsList() {
       sortable: true,
       render: (p) => (
         <div className={styles.patientCell}>
-          <span className={styles.avatar} aria-hidden="true">
-            {p.firstName[0]}
-            {p.lastName[0]}
-          </span>
+          <Avatar name={`${p.firstName} ${p.lastName}`} />
           <span>
             <Link href={`/patients/${p.id}`} className={styles.name} onClick={(e) => e.stopPropagation()}>
               {p.firstName} {p.lastName}
             </Link>
-            <span className={styles.sub}>{p.mrn}</span>
+            <span className={styles.sub}>{p.email || p.mrn}</span>
           </span>
         </div>
       ),
@@ -106,6 +108,7 @@ export function PatientsList() {
         </span>
       ),
     },
+    { key: "mrn", header: "MRN", render: (p) => <span className={styles.mono}>{p.mrn}</span> },
     { key: "phone", header: "Phone", render: (p) => p.phone },
     { key: "doctor", header: "Primary doctor", sortable: true, render: (p) => doctorName[p.primaryDoctorId] ?? "—" },
     {
@@ -127,15 +130,41 @@ export function PatientsList() {
         title="Patients"
         description="Search the clinic's patient records and open a record to see appointment history."
         actions={
-          can(role, "patients:create") && (
-            <Button onClick={() => router.push("/patients/new")}>+ Add patient</Button>
-          )
+          <>
+            <Button
+              variant="secondary"
+              disabled={!data}
+              onClick={() =>
+                data &&
+                downloadCsv(
+                  "patients.csv",
+                  ["MRN", "First name", "Last name", "Date of birth", "Phone", "Primary doctor", "Last visit", "Status"],
+                  data.items.map((p) => [p.mrn, p.firstName, p.lastName, p.dateOfBirth, p.phone, doctorName[p.primaryDoctorId] ?? "", p.lastVisit ?? "", p.status]),
+                )
+              }
+            >
+              <Download size={16} /> Export
+            </Button>
+            {can(role, "patients:create") && (
+              <Button onClick={() => router.push("/patients/new")}>
+                <Plus size={16} /> Add patient
+              </Button>
+            )}
+          </>
         }
       />
+
+      <div className={styles.stats}>
+        <StatCard label="Total patients" value={stats?.total ?? "–"} hint={`${stats?.active ?? "–"} active records`} icon={<Users size={18} />} />
+        <StatCard label="Seen in last 30 days" value={stats?.seenLast30Days ?? "–"} hint="Completed appointments" icon={<CalendarCheck size={18} />} tone="green" />
+        <StatCard label="New this month" value={stats?.newThisMonth ?? "–"} hint="Registered since Nov 1" icon={<UserPlus size={18} />} tone="blue" />
+        <StatCard label="No visits yet" value={stats?.neverSeen ?? "–"} hint="Registered, not yet seen" icon={<Search size={18} />} tone="amber" />
+      </div>
 
       <Card flush>
         <div className={styles.filters} role="search">
           <div className={styles.searchBox}>
+            <Search size={16} className={styles.searchIcon} aria-hidden="true" />
             <label htmlFor="patient-search" className="visually-hidden">
               Search patients
             </label>
@@ -186,7 +215,7 @@ export function PatientsList() {
                 router.replace(pathname, { scroll: false });
               }}
             >
-              Clear filters
+              <X size={14} /> Clear filters
             </Button>
           )}
         </div>

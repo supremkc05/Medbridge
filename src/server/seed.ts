@@ -88,7 +88,7 @@ export function seed(): Database {
       insuranceProvider: rnd.pick(INSURERS),
       lastVisit: null,
       status: rnd.chance(0.88) ? "active" : "inactive",
-      createdAt: iso(addDays(TODAY, -rnd.int(200, 900))),
+      createdAt: iso(addDays(TODAY, i % 9 === 4 ? -rnd.int(1, 16) : -rnd.int(200, 900))),
     };
 
     const visits = i % 13 === 5 ? 0 : rnd.int(1, 7);

@@ -1,51 +1,72 @@
 @use "../../styles/tokens" as *;
 
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: $space-4;
+  margin-bottom: $space-5;
+}
+
 .filters {
   display: flex;
   flex-wrap: wrap;
   align-items: flex-end;
   gap: $space-3;
-  padding: $space-4;
+  padding: 16px 20px;
   border-bottom: 1px solid $color-border;
 }
 
 .searchBox {
+  position: relative;
   flex: 1 1 280px;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: $color-faint;
 }
 
 .input,
 .filter select {
-  height: 38px;
-  padding: 0 $space-3;
-  border: 1px solid $color-border;
+  height: 40px;
+  padding: 0 12px;
+  border: 1px solid $color-border-strong;
   border-radius: $radius-sm;
-  background: $color-surface;
+  background-color: $color-surface;
+  box-shadow: $shadow-xs;
   font: inherit;
+  color: $color-text;
 
   &:focus {
     outline: none;
-    border-color: $color-primary;
-    box-shadow: $focus-ring;
+    border-color: #5fd4c2;
+    box-shadow: $shadow-xs, $focus-ring;
   }
 }
 
 .input {
   width: 100%;
+  padding-left: 36px;
+
+  &::placeholder {
+    color: $color-faint;
+  }
 }
 
 .filter {
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  font-size: 12px;
-  font-weight: 600;
+  gap: 6px;
+  font-size: $font-size-xs;
+  font-weight: 500;
   color: $color-muted;
 
   select {
     min-width: 170px;
     font-size: $font-size-md;
-    color: $color-text;
-    font-weight: 400;
   }
 }
 
@@ -55,37 +76,30 @@
   gap: $space-3;
 }
 
-.avatar {
-  width: 34px;
-  height: 34px;
-  flex-shrink: 0;
-  display: grid;
-  place-items: center;
-  border-radius: 50%;
-  background: $color-primary-soft;
-  color: $color-primary;
-  font-size: 12px;
-  font-weight: 700;
-}
-
 .name {
   display: block;
   font-weight: 600;
+  color: $color-text;
 
   &:hover {
-    color: $color-primary;
-    text-decoration: underline;
+    color: $color-primary-hover;
   }
 }
 
 .sub {
   display: block;
-  font-size: 12px;
+  font-size: $font-size-xs;
+  color: $color-muted;
+}
+
+.mono {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: $font-size-sm;
   color: $color-muted;
 }
 
 .muted {
-  color: $color-muted;
+  color: $color-faint;
 }
 
 .fetching {
