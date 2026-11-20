@@ -6,3 +6,5 @@ export { SelectField, TextField } from "./FormField";
 export { PageHeader } from "./PageHeader";
 export { Pagination } from "./Pagination";
 export { EmptyState, ErrorState, LoadingState, Notice } from "./States";
+export { Avatar } from "./Avatar";
+export { StatCard } from "./StatCard";

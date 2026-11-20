@@ -1,0 +1,52 @@
+@use "../../styles/tokens" as *;
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 18px 20px;
+  background-color: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-xs;
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.label {
+  font-size: $font-size-sm;
+  font-weight: 500;
+  color: $color-muted;
+}
+
+.icon {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: $radius-sm;
+}
+
+.teal { background: #ecfdf9; color: #0d9488; }
+.green { background: #ecfdf3; color: #079455; }
+.amber { background: #fffaeb; color: #dc6803; }
+.red { background: #fef3f2; color: #d92d20; }
+.blue { background: #eff8ff; color: #1570ef; }
+.violet { background: #f4f3ff; color: #6938ef; }
+
+.value {
+  font-size: 26px;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  color: $color-text;
+  font-variant-numeric: tabular-nums;
+}
+
+.hint {
+  font-size: $font-size-xs;
+  color: $color-muted;
+}

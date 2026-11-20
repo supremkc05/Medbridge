@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { CircleCheck, Info, SearchX, TriangleAlert } from "lucide-react";
 import { Button } from "./Button";
 import styles from "./States.module.scss";
 
@@ -13,11 +14,21 @@ export function LoadingState({ rows = 6, label = "Loading" }: { rows?: number; l
   );
 }
 
-export function EmptyState({ title, description, action }: { title: string; description?: string; action?: ReactNode }) {
+export function EmptyState({
+  title,
+  description,
+  action,
+  icon,
+}: {
+  title: string;
+  description?: string;
+  action?: ReactNode;
+  icon?: ReactNode;
+}) {
   return (
     <div className={styles.empty}>
       <div className={styles.icon} aria-hidden="true">
-        ∅
+        {icon ?? <SearchX size={22} />}
       </div>
       <p className={styles.title}>{title}</p>
       {description && <p className={styles.description}>{description}</p>}
@@ -43,7 +54,8 @@ export function ErrorState({ message, onRetry }: { message?: string; onRetry?: (
 export function Notice({ tone = "info", children }: { tone?: "info" | "warning" | "success"; children: ReactNode }) {
   return (
     <div className={`${styles.notice} ${styles[tone]}`} role={tone === "success" ? "status" : undefined}>
-      {children}
+      {tone === "success" ? <CircleCheck size={18} /> : tone === "warning" ? <TriangleAlert size={18} /> : <Info size={18} />}
+      <div>{children}</div>
     </div>
   );
 }

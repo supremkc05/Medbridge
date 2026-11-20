@@ -1,0 +1,22 @@
+.avatar {
+  display: inline-grid;
+  place-items: center;
+  flex-shrink: 0;
+  border-radius: 50%;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.sm { width: 28px; height: 28px; font-size: 11px; }
+.md { width: 36px; height: 36px; font-size: 13px; }
+.lg { width: 44px; height: 44px; font-size: 15px; }
+.xl { width: 64px; height: 64px; font-size: 22px; }
+
+.teal { background: #ccfbef; color: #0f766e; }
+.blue { background: #dbeafe; color: #1d4ed8; }
+.violet { background: #ede9fe; color: #6d28d9; }
+.amber { background: #fef0c7; color: #b54708; }
+.rose { background: #ffe4e8; color: #c01048; }
+.sky { background: #e0f2fe; color: #0369a1; }
+.emerald { background: #d1fadf; color: #067647; }
+.indigo { background: #e0eaff; color: #3538cd; }
