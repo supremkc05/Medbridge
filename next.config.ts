@@ -1,9 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
-  cacheComponents: true,
-  partialPrefetching: true,
+  // The app is a client-rendered dashboard backed by RTK Query, so prerendering
+  // with Cache Components is not used.
 };
 
 export default nextConfig;
