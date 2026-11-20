@@ -1,17 +1,20 @@
-# MedBridge — Recreated Demo
+<p align="left"><img src="src/assets/brand/medbridge-logo.png" alt="MedBridge" width="260"></p>
 
-> **Recreated demonstration of the interface, built after the placement. This is not client code.**
-> All data is generated test data. No real patient information is used anywhere in this repository.
+# MedBridge
 
-This project recreates, from scratch, the kind of screens I worked on during my industrial training
-(IND60308) as a frontend development intern: a clinic management web app with patients,
-administration and billing modules. The original product belongs to a client and is covered by a
-non-disclosure agreement, so none of its source code, designs or data are included here.
+Clinic management web app: overview dashboard, appointments, patient records, billing and administration.
+
+> **About this repository.** I wrote this from scratch after my industrial training (IND60308) to show
+> the kind of screens I built as a frontend intern. The production system belongs to a client and is
+> covered by a non-disclosure agreement, so none of its source code, designs or data are included.
+> All data here is generated sample data; no real patient information is used.
 
 ## Features
 
 | Module | Screens |
 | --- | --- |
+| Overview | KPIs, monthly revenue, today's upcoming appointments, overdue invoices, doctor workload, recently seen patients |
+| Appointments | Week strip, day schedule with doctor and status filters, check-in / complete / no-show actions |
 | Patients | List with search, filters, sorting and pagination · patient detail with appointment history · create/edit form with validation |
 | Administration | Staff accounts with role-aware controls and a permissions matrix · clinic settings |
 | Billing | Invoice dashboard with period totals, collection status, monthly chart and filters |

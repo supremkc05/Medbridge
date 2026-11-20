@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import styles from "./StatCard.module.scss";
 
-type Tone = "teal" | "green" | "amber" | "red" | "blue" | "violet";
+type Tone = "teal" | "cyan" | "green" | "amber" | "red" | "blue" | "violet";
 
 interface StatCardProps {
   label: string;

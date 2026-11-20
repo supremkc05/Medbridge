@@ -27,6 +27,7 @@ import styles from "./PatientDetail.module.scss";
 
 const APPT_STATUS: Record<Appointment["status"], { label: string; tone: BadgeTone }> = {
   completed: { label: "Completed", tone: "success" },
+  checked_in: { label: "Checked in", tone: "warning" },
   scheduled: { label: "Scheduled", tone: "info" },
   cancelled: { label: "Cancelled", tone: "neutral" },
   no_show: { label: "No-show", tone: "danger" },
@@ -160,7 +161,7 @@ export function PatientDetail({ id }: { id: string }) {
                         <Badge tone={APPT_STATUS[a.status].tone}>{APPT_STATUS[a.status].label}</Badge>
                       </div>
                       <p className={styles.eventMeta}>
-                        {formatDate(a.date)} · {d?.name ?? "—"}
+                        {formatDate(a.date)}, {a.time} · {d?.name ?? "—"}
                         {d && <span className={styles.specialty}> · {d.specialty}</span>}
                       </p>
                     </div>
