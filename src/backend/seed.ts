@@ -20,7 +20,7 @@ const LAST = [
 ];
 const STREETS = ["Maple Ave", "Oak St", "Cedar Ln", "Pine Rd", "Elm St", "Lakeview Dr", "Hillcrest Blvd", "Willow Way"];
 const CITIES = ["Springfield, IL", "Madison, WI", "Columbus, OH", "Ann Arbor, MI", "Des Moines, IA"];
-const INSURERS = ["BlueShield Demo", "Northwind Health", "Contoso Care", "Fabrikam Mutual", "Self-pay"];
+const INSURERS = ["BlueShield Health", "Northwind Health", "Contoso Care", "Fabrikam Mutual", "Self-pay"];
 const REASONS = ["Annual check-up", "Follow-up", "Flu symptoms", "Blood pressure review", "Lab results", "Back pain", "Vaccination", "Skin rash"];
 export const SERVICES: { name: string; price: number }[] = [
   { name: "General consultation", price: 120 },
@@ -33,7 +33,16 @@ export const SERVICES: { name: string; price: number }[] = [
 ];
 
 const iso = (d: Date) => d.toISOString().slice(0, 10);
+const SLOTS = Array.from({ length: 27 }, (_, i) => {
+  const minutes = 8 * 60 + i * 20;
+  return `${String(Math.floor(minutes / 60)).padStart(2, "0")}:${String(minutes % 60).padStart(2, "0")}`;
+});
 const addDays = (d: Date, days: number) => new Date(d.getTime() + days * 86_400_000);
+/** The clinic is closed at weekends, so move generated dates back to the Friday before. */
+const weekday = (d: Date) => {
+  const day = d.getUTCDay();
+  return day === 6 ? addDays(d, -1) : day === 0 ? addDays(d, -2) : d;
+};
 
 export interface Database {
   doctors: Doctor[];
@@ -94,7 +103,7 @@ export function seed(): Database {
     const visits = i % 13 === 5 ? 0 : rnd.int(1, 7);
     let last: string | null = null;
     for (let v = 0; v < visits; v++) {
-      const date = addDays(TODAY, -rnd.int(3, 420));
+      const date = weekday(addDays(TODAY, -rnd.int(3, 420)));
       const status: Appointment["status"] = rnd.chance(0.82) ? "completed" : rnd.pick(["cancelled", "no_show"] as const);
       const apptDoctor = rnd.chance(0.75) ? doctor : rnd.pick(doctors);
       appointments.push({
@@ -102,6 +111,8 @@ export function seed(): Database {
         patientId: id,
         doctorId: apptDoctor.id,
         date: iso(date),
+        time: rnd.pick(SLOTS),
+        durationMinutes: 20,
         reason: rnd.pick(REASONS),
         status,
       });
@@ -111,7 +122,7 @@ export function seed(): Database {
           const service = rnd.pick(SERVICES);
           const due = addDays(date, 30);
           const overdue = due < TODAY;
-          const paid = overdue ? rnd.chance(0.78) : rnd.chance(0.35);
+          const paid = overdue ? rnd.chance(0.78) : rnd.chance(0.6);
           invoices.push({
             id: `inv${invoiceSeq}`,
             number: `INV-${invoiceSeq++}`,
@@ -131,13 +142,61 @@ export function seed(): Database {
         id: `a${appointments.length + 1}`,
         patientId: id,
         doctorId: doctor.id,
-        date: iso(addDays(TODAY, rnd.int(2, 40))),
+        date: iso(weekday(addDays(TODAY, rnd.int(3, 40)))),
+        time: rnd.pick(SLOTS),
+        durationMinutes: 20,
         reason: rnd.pick(REASONS),
         status: "scheduled",
       });
     }
     patient.lastVisit = last;
     patients.push(patient);
+  }
+
+  // A realistic clinic week around the reference date (Mon 16 Nov – Fri 20 Nov 2026).
+  const weekStart = addDays(TODAY, -2);
+  for (let day = 0; day < 5; day++) {
+    const date = addDays(weekStart, day);
+    const isPast = day < 2;
+    const isToday = day === 2;
+    for (const doc of doctors.slice(0, 5)) {
+      const count = rnd.int(3, 5);
+      const used = new Set<string>();
+      for (let k = 0; k < count; k++) {
+        let time = rnd.pick(SLOTS.slice(0, 25));
+        while (used.has(time)) time = rnd.pick(SLOTS.slice(0, 25));
+        used.add(time);
+        const patient = rnd.pick(patients);
+        let status: Appointment["status"] = "scheduled";
+        if (isPast) status = rnd.chance(0.85) ? "completed" : rnd.pick(["cancelled", "no_show"] as const);
+        if (isToday) status = time < "10:20" ? (rnd.chance(0.9) ? "completed" : "no_show") : time < "11:00" ? "checked_in" : "scheduled";
+        appointments.push({
+          id: `a${appointments.length + 1}`,
+          patientId: patient.id,
+          doctorId: doc.id,
+          date: iso(date),
+          time,
+          durationMinutes: 20,
+          reason: rnd.pick(REASONS),
+          status,
+        });
+        if (status === "completed") {
+          if (!patient.lastVisit || iso(date) > patient.lastVisit) patient.lastVisit = iso(date);
+          const service = rnd.pick(SERVICES);
+          invoices.push({
+            id: `inv${invoiceSeq}`,
+            number: `INV-${invoiceSeq++}`,
+            patientId: patient.id,
+            patientName: `${patient.firstName} ${patient.lastName}`,
+            service: service.name,
+            issueDate: iso(date),
+            dueDate: iso(addDays(date, 30)),
+            amount: service.price,
+            status: rnd.chance(0.55) ? "paid" : "pending",
+          });
+        }
+      }
+    }
   }
 
   const staff: StaffMember[] = [

@@ -39,8 +39,10 @@ export interface Appointment {
   patientId: string;
   doctorId: string;
   date: string;
+  time: string;
+  durationMinutes: number;
   reason: string;
-  status: "completed" | "scheduled" | "cancelled" | "no_show";
+  status: "completed" | "checked_in" | "scheduled" | "cancelled" | "no_show";
 }
 
 export type StaffStatus = "active" | "invited" | "disabled";

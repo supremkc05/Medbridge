@@ -8,6 +8,6 @@ import { localBaseQuery } from "./localBaseQuery";
 export const api = createApi({
   reducerPath: "api",
   baseQuery: localBaseQuery,
-  tagTypes: ["Patient", "Doctor", "Staff", "Settings", "Invoice"],
+  tagTypes: ["Patient", "Doctor", "Staff", "Settings", "Invoice", "Appointment", "Dashboard"],
   endpoints: () => ({}),
 });
