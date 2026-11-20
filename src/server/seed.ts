@@ -57,10 +57,16 @@ export function seed(): Database {
   const appointments: Appointment[] = [];
   const invoices: Invoice[] = [];
   let invoiceSeq = 1041;
+  const usedNames = new Set<string>();
 
   for (let i = 0; i < 64; i++) {
-    const firstName = FIRST[(i * 7) % FIRST.length];
-    const lastName = LAST[(i * 11 + 3) % LAST.length];
+    let firstName = rnd.pick(FIRST);
+    let lastName = rnd.pick(LAST);
+    while (usedNames.has(`${firstName} ${lastName}`)) {
+      firstName = rnd.pick(FIRST);
+      lastName = rnd.pick(LAST);
+    }
+    usedNames.add(`${firstName} ${lastName}`);
     const id = `p${String(i + 1).padStart(3, "0")}`;
     const birthYear = rnd.int(1948, 2019);
     const doctor = rnd.pick(doctors);
