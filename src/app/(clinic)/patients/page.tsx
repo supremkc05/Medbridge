@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import { LoadingState } from "@/components/ui";
 import { PatientsList } from "@/features/patients/PatientsList";
 
-export const metadata = { title: "Patients · MedBridge (Recreated Demo)" };
+export const metadata = { title: "Patients · MedBridge" };
 
 export default function PatientsPage() {
   return (
