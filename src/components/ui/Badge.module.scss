@@ -1,0 +1,46 @@
+@use "../../styles/tokens" as *;
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 20px;
+  white-space: nowrap;
+
+  &::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+}
+
+.success {
+  background: $color-success-soft;
+  color: $color-success;
+}
+
+.warning {
+  background: $color-warning-soft;
+  color: $color-warning;
+}
+
+.danger {
+  background: $color-danger-soft;
+  color: $color-danger;
+}
+
+.info {
+  background: $color-info-soft;
+  color: $color-info;
+}
+
+.neutral {
+  background: #eef1f5;
+  color: $color-muted;
+}

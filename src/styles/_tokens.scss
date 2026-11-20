@@ -1,0 +1,39 @@
+// Design tokens shared by every SCSS module.
+$color-primary: #0f766e;
+$color-primary-hover: #115e59;
+$color-primary-soft: #e6f4f2;
+$color-sidebar: #0b2e2b;
+$color-sidebar-text: #b9d3cf;
+
+$color-bg: #f4f6f8;
+$color-surface: #ffffff;
+$color-border: #e3e8ee;
+$color-text: #1c2532;
+$color-muted: #64748b;
+
+$color-success: #15803d;
+$color-success-soft: #dcfce7;
+$color-warning: #b45309;
+$color-warning-soft: #fef3c7;
+$color-danger: #b91c1c;
+$color-danger-soft: #fee2e2;
+$color-info: #1d4ed8;
+$color-info-soft: #dbeafe;
+
+$radius-sm: 6px;
+$radius-md: 10px;
+$radius-lg: 14px;
+
+$space-1: 4px;
+$space-2: 8px;
+$space-3: 12px;
+$space-4: 16px;
+$space-5: 24px;
+$space-6: 32px;
+
+$shadow-card: 0 1px 2px rgba(16, 24, 40, 0.05), 0 1px 3px rgba(16, 24, 40, 0.06);
+$focus-ring: 0 0 0 3px rgba(15, 118, 110, 0.25);
+
+$font-size-sm: 13px;
+$font-size-md: 14px;
+$font-size-lg: 16px;

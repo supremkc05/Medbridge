@@ -1,0 +1,42 @@
+@use "../../styles/tokens" as *;
+
+.header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: $space-4;
+  margin-bottom: $space-5;
+}
+
+.crumbs {
+  margin-bottom: $space-2;
+  font-size: $font-size-sm;
+  color: $color-muted;
+
+  a:hover {
+    color: $color-primary;
+  }
+}
+
+.sep {
+  margin: 0 $space-2;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.description {
+  margin: $space-1 0 0;
+  color: $color-muted;
+}
+
+.actions {
+  display: flex;
+  gap: $space-2;
+}

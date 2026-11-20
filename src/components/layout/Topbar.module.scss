@@ -1,0 +1,63 @@
+@use "../../styles/tokens" as *;
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-4;
+  height: 60px;
+  padding: 0 $space-6;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid $color-border;
+}
+
+.banner {
+  margin: 0;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: $color-warning-soft;
+  color: #7c2d12;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.user {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+}
+
+.roleLabel {
+  font-size: $font-size-sm;
+  color: $color-muted;
+}
+
+.select {
+  height: 34px;
+  padding: 0 $space-2;
+  border: 1px solid $color-border;
+  border-radius: $radius-sm;
+  font: inherit;
+  background: $color-surface;
+
+  &:focus {
+    outline: none;
+    box-shadow: $focus-ring;
+  }
+}
+
+.avatar {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: $color-primary-soft;
+  color: $color-primary;
+  font-weight: 700;
+  font-size: 13px;
+}
