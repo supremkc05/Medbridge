@@ -13,7 +13,7 @@ export function Topbar() {
   return (
     <header className={styles.topbar}>
       <p className={styles.banner}>
-        Recreated demonstration of the interface (built after the placement; not client code). All data is generated.
+        Recreated demo · built after the placement · not client code · generated test data
       </p>
       <div className={styles.user}>
         <label htmlFor="role-switcher" className={styles.roleLabel}>
