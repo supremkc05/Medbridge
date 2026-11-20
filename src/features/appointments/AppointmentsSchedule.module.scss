@@ -1,0 +1,171 @@
+@use "../../styles/tokens" as *;
+
+.nav {
+  display: flex;
+  gap: 6px;
+}
+
+.week {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+  margin-bottom: $space-4;
+}
+
+.day {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  padding: 12px 14px;
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+  background: $color-surface;
+  box-shadow: $shadow-xs;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+
+  &:hover {
+    border-color: $color-primary-border;
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: $focus-ring;
+  }
+}
+
+.dayName {
+  font-size: $font-size-xs;
+  font-weight: 500;
+  color: $color-muted;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.dayNum {
+  font-size: 22px;
+  font-weight: 650;
+  color: $color-text;
+}
+
+.dayCount {
+  font-size: $font-size-xs;
+  color: $color-muted;
+}
+
+.dayToday .dayName {
+  color: $color-primary;
+}
+
+.dayActive {
+  border-color: $color-primary;
+  background: $color-primary;
+  box-shadow: 0 4px 12px -2px rgba(18, 87, 201, 0.35);
+
+  .dayName,
+  .dayNum,
+  .dayCount {
+    color: #fff;
+  }
+}
+
+.summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: $space-4;
+
+  span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 12px;
+    border-radius: 999px;
+    background: $color-surface;
+    border: 1px solid $color-border;
+    font-size: $font-size-sm;
+    font-weight: 500;
+    color: $color-text-2;
+  }
+}
+
+.sDone { border-color: $color-success-border !important; color: $color-success !important; background: $color-success-soft !important; }
+.sIn { border-color: $color-warning-border !important; color: $color-warning !important; background: $color-warning-soft !important; }
+.sUp { border-color: $color-info-border !important; color: $color-info !important; background: $color-info-soft !important; }
+.sNo { border-color: $color-danger-border !important; color: $color-danger !important; background: $color-danger-soft !important; }
+
+.filters {
+  display: flex;
+  gap: $space-3;
+  padding: 16px 20px;
+  border-bottom: 1px solid $color-border;
+}
+
+.filter {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: $font-size-xs;
+  font-weight: 500;
+  color: $color-muted;
+
+  select {
+    height: 40px;
+    min-width: 200px;
+    padding: 0 12px;
+    border: 1px solid $color-border-strong;
+    border-radius: $radius-sm;
+    background-color: $color-surface;
+    box-shadow: $shadow-xs;
+    font: inherit;
+    font-size: $font-size-md;
+    color: $color-text;
+
+    &:focus {
+      outline: none;
+      box-shadow: $focus-ring;
+    }
+  }
+}
+
+.time {
+  display: flex;
+  flex-direction: column;
+
+  strong {
+    font-weight: 600;
+    color: $color-text;
+    font-variant-numeric: tabular-nums;
+  }
+
+  span {
+    font-size: $font-size-xs;
+    color: $color-muted;
+  }
+}
+
+.patient {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+
+  a {
+    font-weight: 600;
+    color: $color-text;
+
+    &:hover {
+      color: $color-primary;
+    }
+  }
+}
+
+.actions {
+  display: inline-flex;
+  gap: 4px;
+}
+
+.fetching {
+  opacity: 0.6;
+}
