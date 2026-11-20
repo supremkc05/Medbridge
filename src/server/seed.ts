@@ -153,7 +153,7 @@ export function seed(): Database {
   ];
 
   const settings: ClinicSettings = {
-    name: "Lakeside Family Clinic (Demo)",
+    name: "Lakeside Family Clinic",
     phone: "(555) 310-4400",
     email: "frontdesk@lakeside.example",
     address: "2200 Lakeview Dr, Madison, WI 53703",
