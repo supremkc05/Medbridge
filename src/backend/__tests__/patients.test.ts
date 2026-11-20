@@ -1,4 +1,4 @@
-import { queryPatients } from "@/server/patients";
+import { queryPatients } from "@/backend/patients";
 import type { Patient } from "@/types";
 
 const base: Omit<Patient, "id" | "firstName" | "lastName" | "primaryDoctorId" | "lastVisit"> = {
