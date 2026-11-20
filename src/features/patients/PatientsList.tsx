@@ -23,6 +23,7 @@ import { downloadCsv } from "@/lib/csv";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 import { ageFrom, formatDate } from "@/lib/format";
 import { can } from "@/lib/permissions";
+import { routes } from "@/lib/routes";
 import { REFERENCE_DATE } from "@/lib/referenceDate";
 import { useAppSelector } from "@/store/hooks";
 import type { Patient } from "@/types";
@@ -89,7 +90,7 @@ export function PatientsList() {
         <div className={styles.patientCell}>
           <Avatar name={`${p.firstName} ${p.lastName}`} />
           <span>
-            <Link href={`/patients/${p.id}`} className={styles.name} onClick={(e) => e.stopPropagation()}>
+            <Link href={routes.patient(p.id)} className={styles.name} onClick={(e) => e.stopPropagation()}>
               {p.firstName} {p.lastName}
             </Link>
             <span className={styles.sub}>{p.email || p.mrn}</span>
@@ -146,7 +147,7 @@ export function PatientsList() {
               <Download size={16} /> Export
             </Button>
             {can(role, "patients:create") && (
-              <Button onClick={() => router.push("/patients/new")}>
+              <Button onClick={() => router.push(routes.newPatient)}>
                 <Plus size={16} /> Add patient
               </Button>
             )}
@@ -239,7 +240,7 @@ export function PatientsList() {
                 rowKey={(p) => p.id}
                 sort={{ key: params.sort, order: params.order }}
                 onSortChange={(key: string, order: SortOrder) => update({ sort: key, order })}
-                onRowClick={(p) => router.push(`/patients/${p.id}`)}
+                onRowClick={(p) => router.push(routes.patient(p.id))}
               />
               <Pagination
                 page={data.page}

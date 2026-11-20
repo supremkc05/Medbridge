@@ -23,7 +23,7 @@ import { formatDate, formatMoney } from "@/lib/format";
 import { can } from "@/lib/permissions";
 import { useAppSelector } from "@/store/hooks";
 import { ROLE_LABELS, type Invoice, type InvoiceStatus } from "@/types";
-import type { InvoiceSummary } from "@/server/invoices";
+import type { InvoiceSummary } from "@/backend/invoices";
 import { useGetInvoicesQuery } from "./billingApi";
 import { PERIOD_OPTIONS, periodRange, type Period } from "./periods";
 import styles from "./BillingDashboard.module.scss";

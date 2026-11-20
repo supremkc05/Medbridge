@@ -1,5 +1,5 @@
 import { api } from "@/store/api";
-import type { PatientStats } from "@/server/patients";
+import type { PatientStats } from "@/backend/patients";
 import type { Appointment, Doctor, Paginated, Patient, PatientInput } from "@/types";
 
 export interface PatientListParams {

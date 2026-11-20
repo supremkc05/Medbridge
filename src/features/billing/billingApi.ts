@@ -1,5 +1,5 @@
 import { api } from "@/store/api";
-import type { InvoiceResult } from "@/server/invoices";
+import type { InvoiceResult } from "@/backend/invoices";
 
 export interface InvoiceParams {
   from: string;

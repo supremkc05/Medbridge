@@ -1,6 +1,6 @@
 import { seed, type Database } from "./seed";
 
-// Keep one in-memory database per server process (and across hot reloads in development).
+// One in-memory data store per browser tab (kept on globalThis so it survives hot reloads).
 const globalForDb = globalThis as unknown as { __medbridgeDb?: Database };
 
 export function db(): Database {

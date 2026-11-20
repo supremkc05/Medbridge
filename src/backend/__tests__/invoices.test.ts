@@ -1,4 +1,4 @@
-import { queryInvoices } from "@/server/invoices";
+import { queryInvoices } from "@/backend/invoices";
 import type { Invoice } from "@/types";
 
 const inv = (id: string, issueDate: string, amount: number, status: Invoice["status"], patientName = "Ava Turner"): Invoice => ({
