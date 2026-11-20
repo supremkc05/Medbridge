@@ -1,0 +1,94 @@
+@use "../../styles/tokens" as *;
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: $space-3;
+  padding: $space-4;
+  border-bottom: 1px solid $color-border;
+}
+
+.searchBox {
+  flex: 1 1 280px;
+}
+
+.input,
+.filter select {
+  height: 38px;
+  padding: 0 $space-3;
+  border: 1px solid $color-border;
+  border-radius: $radius-sm;
+  background: $color-surface;
+  font: inherit;
+
+  &:focus {
+    outline: none;
+    border-color: $color-primary;
+    box-shadow: $focus-ring;
+  }
+}
+
+.input {
+  width: 100%;
+}
+
+.filter {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  color: $color-muted;
+
+  select {
+    min-width: 170px;
+    font-size: $font-size-md;
+    color: $color-text;
+    font-weight: 400;
+  }
+}
+
+.patientCell {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+}
+
+.avatar {
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: $color-primary-soft;
+  color: $color-primary;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.name {
+  display: block;
+  font-weight: 600;
+
+  &:hover {
+    color: $color-primary;
+    text-decoration: underline;
+  }
+}
+
+.sub {
+  display: block;
+  font-size: 12px;
+  color: $color-muted;
+}
+
+.muted {
+  color: $color-muted;
+}
+
+.fetching {
+  opacity: 0.6;
+  transition: opacity 0.15s;
+}
