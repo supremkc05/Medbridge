@@ -33,10 +33,16 @@
 }
 
 .kpis {
+  @include stagger(4, 70ms);
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: $space-4;
   margin-bottom: $space-5;
+}
+
+.row,
+.row3 {
+  @include stagger(3, 90ms, 160ms);
 }
 
 .row {
@@ -77,11 +83,11 @@
 }
 
 .paid {
-  background: $color-primary;
+  background: linear-gradient(180deg, #2f74ea, #0f3c8f);
 }
 
 .outstanding {
-  background: #9fd9d7;
+  background: linear-gradient(180deg, #8fe0dd, #3cbfbb);
 }
 
 .more {
@@ -92,6 +98,14 @@
   font-weight: 600;
   color: $color-primary;
   white-space: nowrap;
+
+  svg {
+    transition: transform $duration-base $ease-spring;
+  }
+
+  &:hover svg {
+    transform: translateX(3px);
+  }
 }
 
 .schedule,
@@ -106,11 +120,21 @@
     gap: 12px;
     padding: 12px 20px;
     border-bottom: 1px solid #eef0f3;
+    transition: background-color $duration-fast ease;
 
     &:last-child {
       border-bottom: none;
     }
+
+    &:hover {
+      background: #f7f9fd;
+    }
   }
+}
+
+.schedule,
+.list {
+  @include stagger(8, 50ms, 260ms);
 }
 
 .slot {
@@ -215,6 +239,8 @@
     height: 100%;
     border-radius: 999px;
     background: linear-gradient(90deg, $color-teal, $color-primary);
+    transform-origin: left;
+    animation: grow-x 800ms $ease-out both;
   }
 }
 
@@ -222,4 +248,13 @@
   text-align: right;
   font-weight: 600;
   color: $color-text;
+}
+
+@keyframes grow-x {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
 }

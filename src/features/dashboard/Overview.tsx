@@ -53,8 +53,8 @@ export function Overview() {
       <div className={styles.kpis}>
         <StatCard label="Appointments today" value={kpis.appointmentsToday} hint={`${kpis.remainingToday} remaining`} icon={<CalendarDays size={18} />} />
         <StatCard label="Patients seen this week" value={kpis.patientsSeenThisWeek} hint={`${kpis.activePatients} active patients`} icon={<Users size={18} />} tone="cyan" />
-        <StatCard label="Collected this month" value={formatMoney(kpis.collectedThisMonth)} hint={`${Math.round(kpis.collectionRate * 100)}% collection rate this year`} icon={<Wallet size={18} />} tone="green" />
-        <StatCard label="Outstanding balance" value={formatMoney(kpis.outstanding)} hint={`${kpis.overdueCount} invoices overdue`} icon={<CircleDollarSign size={18} />} tone="amber" />
+        <StatCard label="Collected this month" value={kpis.collectedThisMonth} format={formatMoney} hint={`${Math.round(kpis.collectionRate * 100)}% collection rate this year`} icon={<Wallet size={18} />} tone="green" />
+        <StatCard label="Outstanding balance" value={kpis.outstanding} format={formatMoney} hint={`${kpis.overdueCount} invoices overdue`} icon={<CircleDollarSign size={18} />} tone="amber" />
       </div>
 
       <div className={styles.row}>
@@ -92,7 +92,7 @@ export function Overview() {
                     {a.reason} · {a.doctorName.replace("Dr. ", "Dr ")}
                   </span>
                 </span>
-                <Badge tone={APPOINTMENT_STATUS[a.status].tone}>{APPOINTMENT_STATUS[a.status].label}</Badge>
+                <Badge tone={APPOINTMENT_STATUS[a.status].tone} pulse={a.status === "checked_in"}>{APPOINTMENT_STATUS[a.status].label}</Badge>
               </li>
             ))}
           </ul>
@@ -132,14 +132,14 @@ export function Overview() {
 
         <Card title="Doctors today" description="Booked appointments per doctor">
           <ul className={styles.load}>
-            {data.byDoctor.map((d) => (
+            {data.byDoctor.map((d, i) => (
               <li key={d.id}>
                 <span className={styles.loadName}>
                   <strong>{d.name}</strong>
                   <span>{d.specialty}</span>
                 </span>
                 <span className={styles.bar} aria-hidden="true">
-                  <span style={{ width: `${(d.count / maxLoad) * 100}%` }} />
+                  <span style={{ width: `${(d.count / maxLoad) * 100}%`, animationDelay: `${200 + i * 70}ms` }} />
                 </span>
                 <span className={styles.loadCount}>{d.count}</span>
               </li>
