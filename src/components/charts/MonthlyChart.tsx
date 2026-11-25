@@ -81,7 +81,7 @@ export function MonthlyChart({ data }: { data: InvoiceSummary["byMonth"] }) {
                 <rect x={x} y={outTop} width={barW} height={base - outTop} rx={6} fill={`url(#out-${uid})`} />
                 <rect x={x} y={paidTop} width={barW} height={base - paidTop} rx={m.outstanding ? 0 : 6} fill={`url(#paid-${uid})`} />
                 {/* square off the bottom corners */}
-                <rect x={x} y={base - 6} width={barW} height={6} fill={m.paid ? `url(#paid-${uid})` : `url(#out-${uid})`} />
+                <rect x={x} y={base - 6} width={barW} height={6} fill={m.paid ? "#0f3c8f" : "#3cbfbb"} />
               </g>
               <text x={pad.left + slot * i + slot / 2} y={H - 8} textAnchor="middle" className={styles.axis}>
                 {MONTH.format(date(m.month))}

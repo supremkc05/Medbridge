@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { CalendarCheck, Download, Plus, Search, UserPlus, Users, X } from "lucide-react";
+import { Download, Plus, Search, X } from "lucide-react";
 import {
   Avatar,
   Badge,
@@ -156,10 +156,10 @@ export function PatientsList() {
       />
 
       <div className={styles.stats}>
-        <StatCard label="Total patients" value={stats?.total ?? "–"} hint={`${stats?.active ?? "–"} active records`} icon={<Users size={18} />} />
-        <StatCard label="Seen in last 30 days" value={stats?.seenLast30Days ?? "–"} hint="Completed appointments" icon={<CalendarCheck size={18} />} tone="green" />
-        <StatCard label="New this month" value={stats?.newThisMonth ?? "–"} hint="Registered since Nov 1" icon={<UserPlus size={18} />} tone="blue" />
-        <StatCard label="No visits yet" value={stats?.neverSeen ?? "–"} hint="Registered, not yet seen" icon={<Search size={18} />} tone="amber" />
+        <StatCard featured label="Total patients" value={stats?.total ?? "–"} hint={`${stats?.active ?? "–"} active records`} />
+        <StatCard label="Seen in last 30 days" value={stats?.seenLast30Days ?? "–"} hint="Completed appointments" />
+        <StatCard label="New this month" value={stats?.newThisMonth ?? "–"} hint="Registered since Nov 1" />
+        <StatCard label="No visits yet" value={stats?.neverSeen ?? "–"} hint="Registered, not yet seen" />
       </div>
 
       <Card flush>

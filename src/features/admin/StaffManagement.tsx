@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { Lock, Mail, Plus, Receipt, ShieldCheck, Stethoscope, UserRound, X } from "lucide-react";
+import { Lock, Mail, Plus, X } from "lucide-react";
 import {
   Avatar,
   Badge,
@@ -34,10 +34,10 @@ const STATUS: Record<StaffStatus, { label: string; tone: BadgeTone }> = {
 const ROLES = Object.keys(ROLE_LABELS) as Role[];
 
 const ROLE_META = {
-  manager: { icon: ShieldCheck, tone: "violet", hint: "Full administrative access" },
-  doctor: { icon: Stethoscope, tone: "teal", hint: "Clinical records" },
-  front_desk: { icon: UserRound, tone: "blue", hint: "Registration and scheduling" },
-  billing: { icon: Receipt, tone: "amber", hint: "Invoices and payments" },
+  manager: { hint: "Full administrative access" },
+  doctor: { hint: "Clinical records" },
+  front_desk: { hint: "Registration and scheduling" },
+  billing: { hint: "Invoices and payments" },
 } as const;
 const ROLE_OPTIONS = ROLES.map((r) => ({ value: r, label: ROLE_LABELS[r] }));
 
@@ -190,8 +190,6 @@ export function StaffManagement() {
               label={`${ROLE_LABELS[c.role]}s`.replace("Front desks", "Front desk staff")}
               value={c.count}
               hint={meta.hint}
-              icon={<meta.icon size={18} />}
-              tone={meta.tone}
             />
           );
         })}

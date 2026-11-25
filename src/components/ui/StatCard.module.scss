@@ -1,98 +1,82 @@
 @use "../../styles/tokens" as *;
 
 .card {
-  --tone: #{$color-primary};
-  --tone-soft: #{$color-primary-soft};
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  padding: 18px 20px;
+  gap: 10px;
+  min-height: 132px;
+  padding: 20px 22px 18px;
   overflow: hidden;
-  background-color: $color-surface;
   border: 1px solid $color-border;
   border-radius: $radius-lg;
-  box-shadow: $shadow-xs;
+  // light falls from the top: a barely-there gradient plus layered shadow
+  background: linear-gradient(180deg, #ffffff 0%, #fbfcfe 100%);
+  box-shadow:
+    0 1px 2px rgba(11, 31, 74, 0.04),
+    0 4px 12px -6px rgba(11, 31, 74, 0.08),
+    inset 0 1px 0 #ffffff;
   transition: transform $duration-base $ease-out, box-shadow $duration-base $ease-out, border-color $duration-base $ease-out;
-
-  // soft wash of the card's tone in the corner, strongest on hover
-  &::after {
-    content: "";
-    position: absolute;
-    top: -60px;
-    right: -60px;
-    width: 160px;
-    height: 160px;
-    border-radius: 50%;
-    background: radial-gradient(closest-side, var(--tone-soft), transparent);
-    opacity: 0.7;
-    transition: opacity $duration-slow $ease-out, transform $duration-slow $ease-out;
-    pointer-events: none;
-  }
 
   &:hover {
     transform: translateY(-2px);
     border-color: $color-border-strong;
     box-shadow: $shadow-hover;
-
-    &::after {
-      opacity: 1;
-      transform: scale(1.15);
-    }
-
-    .icon {
-      transform: rotate(-6deg) scale(1.06);
-    }
   }
 }
 
-.top {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
 .label {
-  font-size: $font-size-sm;
-  font-weight: 500;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
   color: $color-muted;
 }
 
-.icon {
-  width: 36px;
-  height: 36px;
-  display: grid;
-  place-items: center;
-  border-radius: 10px;
-  background: var(--tone-soft);
-  color: var(--tone);
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--tone) 14%, transparent);
-  transition: transform $duration-base $ease-spring;
-}
-
-.teal { --tone: #1257c9; --tone-soft: #eaf1ff; }
-.cyan { --tone: #0b8f8c; --tone-soft: #e3f6f5; }
-.green { --tone: #079455; --tone-soft: #e8f9ef; }
-.amber { --tone: #dc6803; --tone-soft: #fff4e0; }
-.red { --tone: #d92d20; --tone-soft: #fdecea; }
-.blue { --tone: #1570ef; --tone-soft: #eaf4ff; }
-.violet { --tone: #6938ef; --tone-soft: #f1efff; }
-
 .value {
-  position: relative;
-  z-index: 1;
-  font-size: 28px;
+  margin-top: auto;
+  font-size: 32px;
+  line-height: 1;
   font-weight: 650;
-  letter-spacing: -0.025em;
-  color: $color-text;
+  letter-spacing: -0.03em;
+  color: $color-navy;
   font-variant-numeric: tabular-nums;
 }
 
 .hint {
-  position: relative;
-  z-index: 1;
+  padding-top: 10px;
+  border-top: 1px solid #eef1f5;
   font-size: $font-size-xs;
   color: $color-muted;
+}
+
+// Lead figure: the brand navy with a soft teal light in the corner
+.featured {
+  border-color: transparent;
+  background:
+    radial-gradient(120% 90% at 100% 0%, rgba(15, 169, 166, 0.35) 0%, transparent 55%),
+    linear-gradient(150deg, #0b1f4a 0%, #123a86 100%);
+  box-shadow:
+    0 12px 28px -14px rgba(11, 31, 74, 0.7),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+
+  &:hover {
+    border-color: transparent;
+    box-shadow:
+      0 16px 32px -14px rgba(11, 31, 74, 0.8),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+
+  .label {
+    color: rgba(255, 255, 255, 0.66);
+  }
+
+  .value {
+    color: #fff;
+  }
+
+  .hint {
+    border-top-color: rgba(255, 255, 255, 0.12);
+    color: rgba(255, 255, 255, 0.72);
+  }
 }
