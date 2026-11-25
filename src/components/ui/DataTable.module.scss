@@ -31,13 +31,25 @@
   tbody tr:last-child td {
     border-bottom: none;
   }
+
+  tbody {
+    @include stagger(12, 28ms);
+  }
+
+  td {
+    transition: background-color $duration-fast ease;
+  }
 }
 
 .clickable {
   cursor: pointer;
 
   &:hover td {
-    background: #fafbfc;
+    background: #f7f9fd;
+  }
+
+  &:hover td:first-child {
+    box-shadow: inset 3px 0 0 $color-primary;
   }
 }
 

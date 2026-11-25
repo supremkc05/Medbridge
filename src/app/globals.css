@@ -55,3 +55,30 @@ select {
   background-position: right 10px center;
   background-size: 16px;
 }
+
+/* ---------- Motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---------- Polish ---------- */
+::selection {
+  background: rgba(18, 87, 201, 0.16);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #d5d9e0 transparent;
+}
+
+:focus-visible {
+  outline-color: #1257c9;
+}

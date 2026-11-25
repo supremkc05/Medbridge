@@ -26,7 +26,11 @@
   font: inherit;
   font-size: $font-size-md;
   color: $color-text;
-  transition: border-color 0.15s, box-shadow 0.15s;
+  transition: border-color $duration-base $ease-out, box-shadow $duration-base $ease-out, background-color $duration-base;
+
+  &:hover:not(:disabled):not(:focus) {
+    border-color: #b8c0cc;
+  }
 
   &::placeholder {
     color: $color-faint;
@@ -54,6 +58,7 @@
 }
 
 .error {
+  @include enter(0ms, -4px);
   font-size: $font-size-xs;
   color: #d92d20;
 }
