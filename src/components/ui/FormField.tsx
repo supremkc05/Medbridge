@@ -49,20 +49,41 @@ interface TextFieldProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
   error?: string;
   hint?: string;
+  /** Icon shown inside the input on the left. */
+  leading?: ReactNode;
+  /** Control shown inside the input on the right, e.g. a show-password button. */
+  trailing?: ReactNode;
 }
 
-export function TextField({ id, label, error, hint, required, className, ...rest }: TextFieldProps) {
+export function TextField({ id, label, error, hint, required, className, leading, trailing, ...rest }: TextFieldProps) {
+  const input = (
+    <input
+      id={id}
+      name={id}
+      className={[styles.control, error && styles.invalid, leading && styles.withLeading, trailing && styles.withTrailing, className]
+        .filter(Boolean)
+        .join(" ")}
+      aria-invalid={error ? true : undefined}
+      aria-required={required || undefined}
+      aria-describedby={describedBy(id, error, hint)}
+      {...rest}
+    />
+  );
   return (
     <FieldShell id={id} label={label} error={error} hint={hint} required={required}>
-      <input
-        id={id}
-        name={id}
-        className={[styles.control, error && styles.invalid, className].filter(Boolean).join(" ")}
-        aria-invalid={error ? true : undefined}
-        aria-required={required || undefined}
-        aria-describedby={describedBy(id, error, hint)}
-        {...rest}
-      />
+      {leading || trailing ? (
+        <div className={styles.adorned}>
+          {leading && (
+            <span className={styles.leading} aria-hidden="true">
+              {leading}
+            </span>
+          )}
+          {input}
+          {trailing && <span className={styles.trailing}>{trailing}</span>}
+        </div>
+      ) : (
+        input
+      )}
     </FieldShell>
   );
 }
