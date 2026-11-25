@@ -34,3 +34,35 @@
 .pulse::before {
   animation: mb-pulse 1.8s $ease-out infinite;
 }
+
+// Single-ink variant used inside tables
+.mono {
+  padding-left: 0;
+  padding-right: 0;
+  border-color: transparent;
+  background: none;
+  color: $color-text-2;
+  font-size: $font-size-sm;
+
+  &::before {
+    background: $color-navy;
+  }
+}
+
+.monoStrong {
+  font-weight: 650;
+  color: $color-navy;
+
+  &::before {
+    box-shadow: 0 0 0 3px rgba(11, 31, 74, 0.12);
+  }
+}
+
+.monoQuiet {
+  color: $color-muted;
+
+  &::before {
+    background: transparent;
+    box-shadow: inset 0 0 0 1.5px $color-faint;
+  }
+}
