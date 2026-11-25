@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ArrowRight, CalendarDays, CircleDollarSign, Plus, TriangleAlert, Users, Wallet } from "lucide-react";
+import { ArrowRight, CalendarDays, Plus, TriangleAlert } from "lucide-react";
 import { MonthlyChart } from "@/components/charts/MonthlyChart";
 import { Avatar, Badge, Button, Card, ErrorState, LoadingState, StatCard } from "@/components/ui";
 import { APPOINTMENT_STATUS } from "@/features/appointments/statuses";
@@ -51,10 +51,10 @@ export function Overview() {
       </header>
 
       <div className={styles.kpis}>
-        <StatCard label="Appointments today" value={kpis.appointmentsToday} hint={`${kpis.remainingToday} remaining`} icon={<CalendarDays size={18} />} />
-        <StatCard label="Patients seen this week" value={kpis.patientsSeenThisWeek} hint={`${kpis.activePatients} active patients`} icon={<Users size={18} />} tone="cyan" />
-        <StatCard label="Collected this month" value={kpis.collectedThisMonth} format={formatMoney} hint={`${Math.round(kpis.collectionRate * 100)}% collection rate this year`} icon={<Wallet size={18} />} tone="green" />
-        <StatCard label="Outstanding balance" value={kpis.outstanding} format={formatMoney} hint={`${kpis.overdueCount} invoices overdue`} icon={<CircleDollarSign size={18} />} tone="amber" />
+        <StatCard featured label="Collected this month" value={kpis.collectedThisMonth} format={formatMoney} hint={`${Math.round(kpis.collectionRate * 100)}% collection rate this year`} />
+        <StatCard label="Appointments today" value={kpis.appointmentsToday} hint={`${kpis.remainingToday} remaining`} />
+        <StatCard label="Patients seen this week" value={kpis.patientsSeenThisWeek} hint={`${kpis.activePatients} active patients`} />
+        <StatCard label="Outstanding balance" value={kpis.outstanding} format={formatMoney} hint={`${kpis.overdueCount} invoices overdue`} />
       </div>
 
       <div className={styles.row}>

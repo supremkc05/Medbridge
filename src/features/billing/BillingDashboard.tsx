@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { CircleCheck, Download, Hourglass, Lock, Receipt, Search, TriangleAlert } from "lucide-react";
+import { Download, Lock, Search } from "lucide-react";
 import {
   Avatar,
   Badge,
@@ -40,10 +40,10 @@ function SummaryCards({ summary }: { summary: InvoiceSummary }) {
   const count = (n: number) => `${n} ${n === 1 ? "invoice" : "invoices"}`;
   return (
     <div className={styles.cards}>
-      <StatCard label="Total invoiced" value={formatMoney(summary.total.amount)} hint={count(summary.total.count)} icon={<Receipt size={18} />} />
-      <StatCard label="Paid" value={formatMoney(summary.paid.amount)} hint={count(summary.paid.count)} icon={<CircleCheck size={18} />} tone="green" />
-      <StatCard label="Pending" value={formatMoney(summary.pending.amount)} hint={count(summary.pending.count)} icon={<Hourglass size={18} />} tone="amber" />
-      <StatCard label="Overdue" value={formatMoney(summary.overdue.amount)} hint={count(summary.overdue.count)} icon={<TriangleAlert size={18} />} tone="red" />
+      <StatCard featured label="Total invoiced" value={summary.total.amount} format={formatMoney} hint={count(summary.total.count)} />
+      <StatCard label="Paid" value={summary.paid.amount} format={formatMoney} hint={count(summary.paid.count)} />
+      <StatCard label="Pending" value={summary.pending.amount} format={formatMoney} hint={count(summary.pending.count)} />
+      <StatCard label="Overdue" value={summary.overdue.amount} format={formatMoney} hint={count(summary.overdue.count)} />
     </div>
   );
 }
