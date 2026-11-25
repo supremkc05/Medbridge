@@ -67,3 +67,45 @@
   font-size: $font-size-xs;
   color: $color-muted;
 }
+
+.adorned {
+  position: relative;
+  display: flex;
+
+  .control {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &:focus-within .leading {
+    color: $color-primary;
+  }
+}
+
+.withLeading {
+  padding-left: 40px;
+}
+
+.withTrailing {
+  padding-right: 44px;
+}
+
+.leading,
+.trailing {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  display: grid;
+  place-items: center;
+}
+
+.leading {
+  left: 13px;
+  color: $color-faint;
+  pointer-events: none;
+  transition: color $duration-base $ease-out;
+}
+
+.trailing {
+  right: 4px;
+}
