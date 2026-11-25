@@ -11,6 +11,7 @@ import { can } from "@/lib/permissions";
 import { routes } from "@/lib/routes";
 import { useAppSelector } from "@/store/hooks";
 import { useGetDashboardQuery } from "./dashboardApi";
+import { MonochromeContext } from "@/components/ui/TableTone";
 import styles from "./Overview.module.scss";
 
 const LONG = new Intl.DateTimeFormat("en-US", { weekday: "long", day: "numeric", month: "long", year: "numeric", timeZone: "UTC" });
@@ -29,7 +30,8 @@ export function Overview() {
   const showBilling = can(role, "billing:view");
 
   return (
-    <>
+    // the overview's lists are tables in all but markup, so they share the single-ink style
+    <MonochromeContext.Provider value={true}>
       <header className={styles.header}>
         <div>
           <p className={styles.date}>{LONG.format(new Date(`${data.today}T00:00:00Z`))}</p>
@@ -170,6 +172,6 @@ export function Overview() {
           </ul>
         </Card>
       </div>
-    </>
+    </MonochromeContext.Provider>
   );
 }
