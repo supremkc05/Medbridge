@@ -15,8 +15,10 @@
     background: $color-subtle;
     border-bottom: 1px solid $color-border;
     color: $color-muted;
-    font-size: $font-size-xs;
-    font-weight: 500;
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
     white-space: nowrap;
   }
 
@@ -41,15 +43,24 @@
   }
 }
 
+// Numbers: right-aligned, fixed-width digits, ink colour only
+.numeric {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+  font-weight: 600;
+  color: $color-text !important;
+  white-space: nowrap;
+}
+
 .clickable {
   cursor: pointer;
 
   &:hover td {
-    background: #f7f9fd;
+    background: #f6f8fb;
   }
 
   &:hover td:first-child {
-    box-shadow: inset 3px 0 0 $color-primary;
+    box-shadow: inset 3px 0 0 $color-navy;
   }
 }
 
@@ -82,5 +93,5 @@
 
 .sortActive {
   opacity: 1;
-  color: $color-primary;
+  color: $color-navy;
 }

@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { ArrowDown, ArrowUp, ArrowUpDown } from "lucide-react";
+import { MonochromeContext } from "./TableTone";
 import styles from "./DataTable.module.scss";
 
 export type SortOrder = "asc" | "desc";
@@ -31,6 +32,7 @@ export function DataTable<T>({ caption, columns, rows, rowKey, sort, onSortChang
   };
 
   return (
+    <MonochromeContext.Provider value={true}>
     <div className={styles.wrapper}>
       <table className={styles.table}>
         <caption className="visually-hidden">{caption}</caption>
@@ -69,7 +71,7 @@ export function DataTable<T>({ caption, columns, rows, rowKey, sort, onSortChang
               onClick={onRowClick ? () => onRowClick(row) : undefined}
             >
               {columns.map((col) => (
-                <td key={col.key} style={{ textAlign: col.align ?? "left" }}>
+                <td key={col.key} style={{ textAlign: col.align ?? "left" }} className={col.align === "right" ? styles.numeric : undefined}>
                   {col.render(row)}
                 </td>
               ))}
@@ -78,5 +80,6 @@ export function DataTable<T>({ caption, columns, rows, rowKey, sort, onSortChang
         </tbody>
       </table>
     </div>
+    </MonochromeContext.Provider>
   );
 }
