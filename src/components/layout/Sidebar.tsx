@@ -14,7 +14,7 @@ import {
   Users,
   type LucideIcon,
 } from "lucide-react";
-import logo from "@/assets/brand/medbridge-logo.png";
+import mark from "@/assets/brand/medbridge-mark.png";
 import { routes } from "@/lib/routes";
 import { Avatar } from "@/components/ui/Avatar";
 import { useAppSelector } from "@/store/hooks";
@@ -47,7 +47,13 @@ export function Sidebar() {
   return (
     <aside className={styles.sidebar}>
       <Link href={routes.dashboard} className={styles.brand} aria-label="MedBridge home">
-        <Image src={logo} alt="MedBridge" className={styles.logo} priority />
+        <span className={styles.markTile}>
+          <Image src={mark} alt="" className={styles.mark} priority />
+        </span>
+        <span className={styles.wordmark}>
+          <strong>MedBridge</strong>
+          <span>Connect · Care · Heal</span>
+        </span>
       </Link>
 
       <div className={styles.clinic}>

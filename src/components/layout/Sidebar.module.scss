@@ -1,5 +1,11 @@
 @use "../../styles/tokens" as *;
 
+// Dark navy rail (the logo's navy) so the work surface stays the brightest
+// thing on screen. Text tints are white at set opacities.
+$rail-text: rgba(255, 255, 255, 0.72);
+$rail-muted: rgba(255, 255, 255, 0.45);
+$rail-line: rgba(255, 255, 255, 0.08);
+
 .sidebar {
   position: sticky;
   top: 0;
@@ -8,8 +14,14 @@
   flex-direction: column;
   gap: $space-4;
   padding: 20px 16px;
-  background-color: $color-surface;
-  border-right: 1px solid $color-border;
+  overflow: hidden;
+  isolation: isolate;
+  color: $rail-text;
+  background:
+    radial-gradient(90% 40% at 0% 0%, rgba(18, 87, 201, 0.35) 0%, transparent 70%),
+    radial-gradient(80% 30% at 100% 100%, rgba(15, 169, 166, 0.18) 0%, transparent 70%),
+    linear-gradient(180deg, #0b1f4a 0%, #0a1a3e 100%);
+  box-shadow: inset -1px 0 0 rgba(255, 255, 255, 0.06);
 
   ul {
     list-style: none;
@@ -22,14 +34,55 @@
 }
 
 .brand {
-  display: block;
-  padding: 4px 8px 6px;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 2px 6px 6px;
+  border-radius: $radius-md;
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(139, 227, 225, 0.4);
+  }
 }
 
-.logo {
-  display: block;
-  width: 172px;
+.markTile {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  border-radius: 11px;
+  background: #fff;
+  box-shadow:
+    0 6px 14px -6px rgba(0, 0, 0, 0.5),
+    inset 0 -1px 0 rgba(11, 31, 74, 0.08);
+}
+
+.mark {
+  width: 28px;
   height: auto;
+}
+
+.wordmark {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+
+  strong {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: #fff;
+  }
+
+  span {
+    margin-top: 2px;
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    color: #8be3e1;
+  }
 }
 
 .clinic {
@@ -37,15 +90,15 @@
   align-items: center;
   gap: 10px;
   padding: 10px;
-  border: 1px solid $color-border;
+  border: 1px solid $rail-line;
   border-radius: $radius-md;
-  background: $color-subtle;
-  transition: border-color $duration-base $ease-out, box-shadow $duration-base $ease-out;
+  background: rgba(255, 255, 255, 0.05);
   cursor: pointer;
+  transition: background-color $duration-base $ease-out, border-color $duration-base $ease-out;
 
   &:hover {
-    border-color: $color-primary-border;
-    box-shadow: $shadow-xs;
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.14);
   }
 }
 
@@ -55,8 +108,8 @@
   display: grid;
   place-items: center;
   border-radius: 8px;
-  background: $gradient-brand;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18), 0 2px 6px -2px rgba(11, 31, 74, 0.4);
+  background: $gradient-teal;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
   color: #fff;
   font-size: 12px;
   font-weight: 700;
@@ -71,7 +124,7 @@
   strong {
     font-size: 12.5px;
     font-weight: 600;
-    color: $color-text;
+    color: #fff;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -79,12 +132,12 @@
 
   span {
     font-size: $font-size-xs;
-    color: $color-muted;
+    color: $rail-muted;
   }
 }
 
 .clinicIcon {
-  color: $color-faint;
+  color: $rail-muted;
 }
 
 .nav {
@@ -99,9 +152,9 @@
   padding: 0 10px;
   font-size: 11px;
   font-weight: 600;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: $color-faint;
+  color: $rail-muted;
 }
 
 .link {
@@ -112,37 +165,37 @@
   height: 40px;
   padding: 0 10px;
   border-radius: $radius-sm;
-  color: $color-text-2;
+  color: $rail-text;
   font-weight: 500;
   transition: background-color $duration-base $ease-out, color $duration-base $ease-out;
 
   svg {
-    color: #667085;
+    color: $rail-muted;
     transition: transform $duration-base $ease-spring, color $duration-base $ease-out;
   }
 
   &:hover {
-    background: $color-subtle;
-    color: $color-text;
+    background: rgba(255, 255, 255, 0.06);
+    color: #fff;
 
     svg {
       transform: translateX(2px);
-      color: $color-primary;
+      color: #8be3e1;
     }
   }
 
   &:focus-visible {
     outline: none;
-    box-shadow: $focus-ring;
+    box-shadow: 0 0 0 3px rgba(139, 227, 225, 0.4);
   }
 }
 
 .active {
-  background: linear-gradient(90deg, $color-primary-soft 0%, rgba(238, 244, 255, 0.4) 100%);
-  color: $color-primary-hover;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.13) 0%, rgba(255, 255, 255, 0.04) 100%);
+  color: #fff;
   font-weight: 600;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
 
-  // brand marker that slides in from the edge
   &::before {
     content: "";
     position: absolute;
@@ -151,17 +204,17 @@
     bottom: 9px;
     width: 3px;
     border-radius: 0 3px 3px 0;
-    background: $gradient-teal;
+    background: linear-gradient(180deg, #8be3e1, #0fa9a6);
+    box-shadow: 0 0 12px rgba(139, 227, 225, 0.7);
     animation: mb-scale-in $duration-slow $ease-out both;
   }
 
   svg {
-    color: $color-primary;
+    color: #8be3e1;
   }
 
   &:hover {
-    background: $color-primary-soft;
-    color: $color-primary-hover;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.05) 100%);
   }
 }
 
@@ -171,22 +224,22 @@
   gap: 10px;
   margin-top: auto;
   padding: 12px 8px 0;
-  border-top: 1px solid $color-border;
+  border-top: 1px solid $rail-line;
 }
 
 .signOut {
-  transition: background-color $duration-fast, color $duration-fast;
   margin-left: auto;
   width: 32px;
   height: 32px;
   display: grid;
   place-items: center;
   border-radius: $radius-sm;
-  color: $color-faint;
+  color: $rail-muted;
+  transition: background-color $duration-fast, color $duration-fast;
 
   &:hover {
-    background: $color-subtle;
-    color: $color-danger;
+    background: rgba(255, 255, 255, 0.08);
+    color: #fda29b;
   }
 }
 
@@ -198,11 +251,11 @@
   strong {
     font-size: $font-size-sm;
     font-weight: 600;
-    color: $color-text;
+    color: #fff;
   }
 
   span {
     font-size: $font-size-xs;
-    color: $color-muted;
+    color: $rail-muted;
   }
 }

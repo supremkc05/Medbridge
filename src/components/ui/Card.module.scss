@@ -4,7 +4,9 @@
   background-color: $color-surface;
   border: 1px solid $color-border;
   border-radius: $radius-lg;
-  box-shadow: $shadow-xs;
+  box-shadow:
+    0 1px 2px rgba(11, 31, 74, 0.04),
+    0 4px 12px -6px rgba(11, 31, 74, 0.08);
   overflow: hidden;
   transition: box-shadow $duration-base $ease-out, border-color $duration-base $ease-out;
 
@@ -21,6 +23,7 @@
   gap: $space-4;
   padding: 16px 20px;
   border-bottom: 1px solid $color-border;
+  background: linear-gradient(180deg, #ffffff 0%, #fbfcfe 100%);
 }
 
 .title {
