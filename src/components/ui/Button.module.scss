@@ -10,7 +10,24 @@
   font: inherit;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+  transition:
+    background-color $duration-fast ease,
+    border-color $duration-fast ease,
+    box-shadow $duration-base $ease-out,
+    transform $duration-fast $ease-out,
+    filter $duration-fast ease;
+
+  &:active:not(:disabled) {
+    transform: translateY(1px) scale(0.985);
+  }
+
+  svg {
+    transition: transform $duration-base $ease-spring;
+  }
+
+  &:hover:not(:disabled) svg {
+    transform: scale(1.08);
+  }
   white-space: nowrap;
 
   &:focus-visible {
@@ -37,12 +54,14 @@
 }
 
 .primary {
-  background: $color-primary;
+  background: $gradient-primary;
+  border-color: #0f4fb8;
   color: #fff;
-  box-shadow: $shadow-xs, inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  box-shadow: $shadow-xs, inset 0 1px 0 rgba(255, 255, 255, 0.18);
 
   &:hover:not(:disabled) {
-    background: $color-primary-hover;
+    filter: brightness(1.06);
+    box-shadow: $shadow-primary, inset 0 1px 0 rgba(255, 255, 255, 0.18);
   }
 }
 

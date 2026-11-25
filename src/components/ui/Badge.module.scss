@@ -26,3 +26,11 @@
 .danger { background: $color-danger-soft; border-color: $color-danger-border; color: $color-danger; }
 .info { background: $color-info-soft; border-color: $color-info-border; color: $color-info; }
 .neutral { background: #f9fafb; border-color: #eaecf0; color: #475467; }
+
+.badge {
+  transition: background-color $duration-base $ease-out, border-color $duration-base $ease-out;
+}
+
+.pulse::before {
+  animation: mb-pulse 1.8s $ease-out infinite;
+}

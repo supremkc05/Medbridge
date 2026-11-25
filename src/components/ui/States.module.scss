@@ -10,9 +10,17 @@
 .skeleton {
   height: 18px;
   border-radius: 6px;
-  background: linear-gradient(90deg, #eef0f3 25%, #f6f7f9 50%, #eef0f3 75%);
+  background: linear-gradient(90deg, #edf1f7 25%, #f6f9fe 50%, #edf1f7 75%);
   background-size: 200% 100%;
   animation: shimmer 1.2s infinite;
+
+  &:nth-child(3n + 2) {
+    width: 86%;
+  }
+
+  &:nth-child(3n + 3) {
+    width: 64%;
+  }
 }
 
 @keyframes shimmer {
@@ -40,6 +48,7 @@
   background: $color-primary-soft;
   color: $color-primary;
   box-shadow: 0 0 0 8px #f6f9ff;
+  animation: mb-scale-in $duration-slow $ease-spring both;
 }
 
 .title {
@@ -54,6 +63,7 @@
 }
 
 .notice {
+  @include enter(0ms, 4px);
   display: flex;
   align-items: flex-start;
   gap: 10px;
