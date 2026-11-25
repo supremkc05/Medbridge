@@ -1,17 +1,54 @@
 @use "../../styles/tokens" as *;
 
 .card {
+  --tone: #{$color-primary};
+  --tone-soft: #{$color-primary-soft};
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 6px;
   padding: 18px 20px;
+  overflow: hidden;
   background-color: $color-surface;
   border: 1px solid $color-border;
   border-radius: $radius-lg;
   box-shadow: $shadow-xs;
+  transition: transform $duration-base $ease-out, box-shadow $duration-base $ease-out, border-color $duration-base $ease-out;
+
+  // soft wash of the card's tone in the corner, strongest on hover
+  &::after {
+    content: "";
+    position: absolute;
+    top: -60px;
+    right: -60px;
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    background: radial-gradient(closest-side, var(--tone-soft), transparent);
+    opacity: 0.7;
+    transition: opacity $duration-slow $ease-out, transform $duration-slow $ease-out;
+    pointer-events: none;
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+    border-color: $color-border-strong;
+    box-shadow: $shadow-hover;
+
+    &::after {
+      opacity: 1;
+      transform: scale(1.15);
+    }
+
+    .icon {
+      transform: rotate(-6deg) scale(1.06);
+    }
+  }
 }
 
 .top {
+  position: relative;
+  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -24,30 +61,38 @@
 }
 
 .icon {
-  width: 34px;
-  height: 34px;
+  width: 36px;
+  height: 36px;
   display: grid;
   place-items: center;
-  border-radius: $radius-sm;
+  border-radius: 10px;
+  background: var(--tone-soft);
+  color: var(--tone);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--tone) 14%, transparent);
+  transition: transform $duration-base $ease-spring;
 }
 
-.teal { background: #eef4ff; color: #1257c9; }
-.cyan { background: #e6f7f6; color: #0b8f8c; }
-.green { background: #ecfdf3; color: #079455; }
-.amber { background: #fffaeb; color: #dc6803; }
-.red { background: #fef3f2; color: #d92d20; }
-.blue { background: #eff8ff; color: #1570ef; }
-.violet { background: #f4f3ff; color: #6938ef; }
+.teal { --tone: #1257c9; --tone-soft: #eaf1ff; }
+.cyan { --tone: #0b8f8c; --tone-soft: #e3f6f5; }
+.green { --tone: #079455; --tone-soft: #e8f9ef; }
+.amber { --tone: #dc6803; --tone-soft: #fff4e0; }
+.red { --tone: #d92d20; --tone-soft: #fdecea; }
+.blue { --tone: #1570ef; --tone-soft: #eaf4ff; }
+.violet { --tone: #6938ef; --tone-soft: #f1efff; }
 
 .value {
-  font-size: 26px;
+  position: relative;
+  z-index: 1;
+  font-size: 28px;
   font-weight: 650;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.025em;
   color: $color-text;
   font-variant-numeric: tabular-nums;
 }
 
 .hint {
+  position: relative;
+  z-index: 1;
   font-size: $font-size-xs;
   color: $color-muted;
 }
